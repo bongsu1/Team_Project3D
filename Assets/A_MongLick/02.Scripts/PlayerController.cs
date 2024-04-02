@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,8 +9,11 @@ public class PlayerController : MonoBehaviour, IDamagable
 {
 	[Header("Component")]
 	[SerializeField] Rigidbody rigid;
-	[SerializeField] Weapon weapon;
-	public Weapon Weapon => weapon;
+	public Rigidbody Rigid => rigid;
+	[SerializeField] Weapon swordWeapon;
+	public Weapon SwordWeapon => swordWeapon;
+	[SerializeField] Weapon bowWeapon;
+	public Weapon BowWeapon => bowWeapon;
 	[SerializeField] PlayerInput playerInput;
 	public PlayerInput PlayerInput => playerInput;
 	[SerializeField] int playerLayer;
@@ -17,7 +21,15 @@ public class PlayerController : MonoBehaviour, IDamagable
 	[SerializeField] int invincibilityLayer;
 	public int InvincibilityLayer => invincibilityLayer;
 	[SerializeField] Camera followCamera;
-	[SerializeField] Transform ponit;
+	public Camera FollowCamera => followCamera;
+	[SerializeField] Transform spawnPonit;
+	[SerializeField] Material lineMaterial;
+	public Material LineMaterial => lineMaterial;
+	[SerializeField] LineRenderer lineRenderer;
+	public LineRenderer LineRenderer => lineRenderer;
+	[SerializeField] LayerMask wallLayer;
+	public LayerMask WallLayer => wallLayer;
+
 
 	[Header("Spec")]
 	[SerializeField] float moveSpeed;
@@ -25,10 +37,13 @@ public class PlayerController : MonoBehaviour, IDamagable
 	[SerializeField] float dashSpeed;
 	[SerializeField] float dashTime;
 	[SerializeField] bool canDashCoolTime = true;
+	[SerializeField] float lineSize;
+	public float LineSize => lineSize;
+
 	public bool CanDashCoolTime { get { return canDashCoolTime; } set { canDashCoolTime = value; } }
 	public float DashTime => dashTime;
 
-	public enum State { Move, Sword, Dash }
+	public enum State { Move, Sword, Dash, Bow }
 	private StateMachine<State> stateMachine = new StateMachine<State>();
 
 	private Vector3 moveDir;
@@ -40,6 +55,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 		stateMachine.AddState(State.Move, new MoveState(this));
 		stateMachine.AddState(State.Sword, new SwordState(this));
 		stateMachine.AddState(State.Dash, new DashState(this));
+		stateMachine.AddState(State.Bow, new BowState(this));
 		stateMachine.Start(State.Move);
 	}
 
@@ -55,7 +71,6 @@ public class PlayerController : MonoBehaviour, IDamagable
 	{
 		transform.forward = Vector3.Lerp(transform.forward, moveDir, turnSpeed * Time.deltaTime);
 		rigid.MovePosition(this.gameObject.transform.position + moveDir * moveSpeed * Time.deltaTime);
-		
 	}
 
 	private void FixedUpdate()
@@ -80,14 +95,14 @@ public class PlayerController : MonoBehaviour, IDamagable
 		}
 	}
 
-	public void Use()
+	public void PlayerSword()
 	{
-		weapon.Use();
+		swordWeapon.Sword();
 	}
 
 	private void OnBow(InputValue value)
 	{
-		
+		bowWeapon.Bow(value.isPressed);
 	}
 
 	Vector3 dashVec;
@@ -108,7 +123,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
 	public void DashMove()
 	{
-		rigid.MovePosition(this.gameObject.transform.position + dashVec * dashSpeed * Time.deltaTime);
+		rigid.velocity = new Vector3(dashVec.x, 0, dashVec.z) * dashSpeed;
 	}
 
 	private void OnSkillQ(InputValue value)
@@ -141,11 +156,16 @@ public class PlayerController : MonoBehaviour, IDamagable
 
 	}
 
-	[ContextMenu("Damage")]
+	[ContextMenu("Test")]
+	public void TestDamage()
+	{
+		TakeDamage(40);
+	}
+
 	public void TakeDamage(int damage)
 	{
 		
-		Manager.Game.PlayerData.Hp -= 50;
+		Manager.Game.PlayerData.Hp -= damage;
 		Debug.Log($"플레이어 받은 데미지 : {damage}");
 		Debug.Log($"플레이어 남은 체력 : {Manager.Game.PlayerData.Hp}");
 
@@ -159,10 +179,8 @@ public class PlayerController : MonoBehaviour, IDamagable
 
 	IEnumerator spawnRoutine()
 	{
-		gameObject.SetActive(false);
 		yield return new WaitForSeconds(1.5f);
-		transform.position = ponit.position;
-		gameObject.SetActive(true);
+		transform.position = spawnPonit.position;
 		Manager.Game.PlayerData.Hp = 100;
 	}
 

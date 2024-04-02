@@ -25,7 +25,7 @@
                 },
                 {
                     "name": "Bow",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "000b58a3-9194-4a08-8bcb-35379aa80cff",
                     "expectedControlType": "Button",
                     "processors": "",
@@ -94,6 +94,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Point",
+                    "type": "Value",
+                    "id": "e1c0bcc2-0f44-40f0-aadc-96a64ec1119c",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -248,6 +257,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Interaction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "429a13fb-f78b-4b55-a4c9-6c3fee1cd76a",
+                    "path": "<Pointer>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Point",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
