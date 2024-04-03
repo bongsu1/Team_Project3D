@@ -20,8 +20,6 @@ public class PlayerController : MonoBehaviour, IDamagable
 	public int PlayerLayer => playerLayer;
 	[SerializeField] int invincibilityLayer;
 	public int InvincibilityLayer => invincibilityLayer;
-	[SerializeField] Camera followCamera;
-	public Camera FollowCamera => followCamera;
 	[SerializeField] Transform spawnPonit;
 	[SerializeField] Material lineMaterial;
 	public Material LineMaterial => lineMaterial;
@@ -29,6 +27,8 @@ public class PlayerController : MonoBehaviour, IDamagable
 	public LineRenderer LineRenderer => lineRenderer;
 	[SerializeField] LayerMask wallLayer;
 	public LayerMask WallLayer => wallLayer;
+	[SerializeField] LayerMask groundLayer;
+	public LayerMask GroundLayer => groundLayer;
 
 	[Header("Spec")]
 	[SerializeField] float moveSpeed;
@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 	public void Move()
 	{
 		transform.forward = Vector3.Lerp(transform.forward, moveDir, turnSpeed * Time.deltaTime);
-		rigid.MovePosition(this.gameObject.transform.position + moveDir * moveSpeed * Time.deltaTime);
+		rigid.MovePosition(gameObject.transform.position + moveDir * moveSpeed * Time.deltaTime);
 	}
 
 	private void FixedUpdate()
@@ -83,9 +83,9 @@ public class PlayerController : MonoBehaviour, IDamagable
 
 	private void OnSword(InputValue value)
 	{
-		Ray ray = followCamera.ScreenPointToRay(Input.mousePosition);
+		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		RaycastHit rayHit;
-		if (Physics.Raycast(ray, out rayHit, 100))
+		if (Physics.Raycast(ray, out rayHit, 100, groundLayer))
 		{
 			Vector3 nextVec = rayHit.point - transform.position;
 			nextVec.y = 0;

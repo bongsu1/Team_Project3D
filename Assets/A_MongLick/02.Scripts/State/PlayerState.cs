@@ -88,45 +88,14 @@ public class BowState : PlayerState
 
     public override void Update()
     {
-        Ray ray = oner.FollowCamera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit rayHit;
-        if (Physics.Raycast(ray, out rayHit, 100))
+        if (Physics.Raycast(ray, out rayHit, 100, oner.GroundLayer))
         {
             Vector3 nextVec = rayHit.point - oner.transform.position;
             nextVec.y = 0;
             oner.transform.LookAt(oner.transform.position + nextVec);
         }
-
-        /*// 라인 시작점 설정
-		oner.LineRenderer.SetPosition(0, oner.transform.position);
-		RaycastHit hit;
-		if (Physics.Raycast(oner.transform.position, oner.transform.forward, out hit, oner.LineSize, oner.BowWeapon.MonsterLayer))
-		{
-			oner.LineRenderer.positionCount = 2;
-			oner.LineRenderer.SetPosition(1, hit.point);
-		}
-		else if (Physics.Raycast(oner.transform.position, oner.transform.forward, out hit, oner.LineSize, oner.WallLayer) && oner.BowWeapon.BowFirstTime)
-		{
-			oner.LineRenderer.positionCount = 3;
-			oner.LineRenderer.SetPosition(1, hit.point);
-			Vector3 NewDir = Vector3.Reflect(oner.transform.forward, hit.normal);
-
-			if (Physics.Raycast(hit.point, NewDir, out hit, oner.LineSize))
-			{
-				oner.LineRenderer.SetPosition(2, hit.point);
-			}
-			else
-			{
-				oner.LineRenderer.SetPosition(2, hit.point + NewDir * oner.LineSize);
-			}
-		}
-		else
-		{
-			oner.LineRenderer.positionCount = 2;
-			// 라인 끝점 설정 (oner.LineSize 범위 내에 아무것도 충돌하지 않았을 때)
-			oner.LineRenderer.SetPosition(1, oner.transform.position + oner.transform.forward * oner.LineSize);
-			Debug.DrawRay(oner.transform.position, oner.transform.forward * oner.LineSize, Color.yellow);
-		}*/
 
         // 라인 시작점 설정
         oner.LineRenderer.positionCount = 2;
