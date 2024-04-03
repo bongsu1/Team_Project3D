@@ -29,6 +29,10 @@ public class PlayerController : MonoBehaviour, IDamagable
 	public LayerMask WallLayer => wallLayer;
 	[SerializeField] LayerMask groundLayer;
 	public LayerMask GroundLayer => groundLayer;
+	Vector3 dashVec;
+	public Vector3 DashVec { get { return dashVec; } set { dashVec = value; } }
+	Vector3 moveDir;
+	public Vector3 MoveDir { get { return moveDir; } set { moveDir = value; } }
 
 	[Header("Spec")]
 	[SerializeField] float moveSpeed;
@@ -45,7 +49,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 	public enum State { Move, Sword, Dash, Bow }
 	private StateMachine<State> stateMachine = new StateMachine<State>();
 
-	private Vector3 moveDir;
+	
 
 	private void Start()
 	{
@@ -96,21 +100,6 @@ public class PlayerController : MonoBehaviour, IDamagable
 	public void PlayerSword()
 	{
 		swordWeapon.Sword();
-	}
-
-	private void OnBow(InputValue value)
-	{
-		bowWeapon.Bow(value.isPressed);
-	}
-
-	Vector3 dashVec;
-
-	private void OnDash(InputValue value)
-	{
-		if (canDashCoolTime == false)
-			return;
-
-		dashVec = moveDir;
 	}
 
 	public void DashMove()

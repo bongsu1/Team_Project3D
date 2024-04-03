@@ -115,6 +115,12 @@ public class Weapon : MonoBehaviour
 			if (!canArrow)
 				return;
 
+			if (bowCoroutine != null)
+			{
+				StopCoroutine(bowCoroutine);
+				bowSecondTime = false;
+				bowFirstTime = false;
+			}
 			bowCoroutine = StartCoroutine(BowTime());
 		}
 		else
@@ -201,5 +207,15 @@ public class Weapon : MonoBehaviour
 				damagable.TakeDamage(thirdAttack ? thirdAttackDamage : damage);
 			}
 		}
+	}
+
+	public void Cancel()
+	{
+		if (bowCoroutine != null)
+		{
+			StopCoroutine(bowCoroutine);
+		}
+		canArrow = false;
+		StartCoroutine(BowDelays());
 	}
 }

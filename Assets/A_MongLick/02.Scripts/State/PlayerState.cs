@@ -84,7 +84,8 @@ public class BowState : PlayerState
     public override void Enter()
     {
         oner.LineRenderer.enabled = true;
-    }
+		oner.BowWeapon.Bow(oner.PlayerInput.actions["Bow"].IsPressed());
+	}
 
     public override void Update()
     {
@@ -122,12 +123,14 @@ public class BowState : PlayerState
 
         if (!oner.PlayerInput.actions["Bow"].IsPressed() && oner.PlayerInput.actions["Bow"].triggered)
         {
+            oner.BowWeapon.Bow(oner.PlayerInput.actions["Bow"].IsPressed());
             ChangeState(PlayerController.State.Move);
         }
 
         if (oner.PlayerInput.actions["Dash"].IsPressed() && oner.CanDashCoolTime)
         {
-            Debug.Log("´ë½¬ µé¾î°¨");
+            oner.BowWeapon.Cancel();
+            Debug.Log("Äµ½½½ÃÅ´");
             ChangeState(PlayerController.State.Dash);
         }
     }
@@ -147,7 +150,16 @@ public class DashState : PlayerState
     {
         oner.gameObject.layer = oner.InvincibilityLayer;
         oner.CanDashCoolTime = false;
-    }
+
+        if(oner.MoveDir == Vector3.zero)
+        {
+			oner.DashVec = oner.transform.forward;
+        }
+        else
+        {
+			oner.DashVec = oner.MoveDir;
+		}
+	}
 
     public override void FixedUpdate()
     {
