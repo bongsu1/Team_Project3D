@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
@@ -9,6 +7,7 @@ public class Weapon : MonoBehaviour
 	public BoxCollider swordArea;
 	public GameObject arrowPrefab;
 	protected PlayerController oner;
+	public Rigidbody arrowRigid;
 
 	[Header("Spec")]
 	public int damage;
@@ -22,6 +21,15 @@ public class Weapon : MonoBehaviour
 	[SerializeField] bool secondAttack = false;
 	[SerializeField] bool thirdAttack = false;
 	[SerializeField] bool canAttack = true;
+	[SerializeField] float arrowSize;
+	[SerializeField] float arrowChargingSize;
+	[SerializeField] float maxArrowRange;
+	[SerializeField] float arrowSpeed;
+	[SerializeField] Transform arrowTransform;
+	[SerializeField] bool isArrowShot;
+	[SerializeField] bool isArrowChargingShot;
+	[SerializeField] bool canArrow = true;
+	// 스크립트 안에서 하는거 다 뺴기
 
 	[SerializeField] bool bowFirstTime = false;
 	public bool BowFirstTime => bowFirstTime;
@@ -29,7 +37,7 @@ public class Weapon : MonoBehaviour
 	public bool BowSecondTime => bowSecondTime;
 	[SerializeField] float bowTime;
 	public int bowFirstDamage = 10;
-	public int bowFecondDamag = 20;
+	public int bowSecondDamag = 20;
 	public int bowThirdDamage = 30;
 
 	private Coroutine firstCoroutine;
@@ -107,29 +115,35 @@ public class Weapon : MonoBehaviour
 	{
 		if (onClick)
 		{
+			if (!canArrow)
+				return;
+			canArrow = false;
 			bowCoroutine = StartCoroutine(BowTime());
 		}
 		else
 		{
-			StopCoroutine(bowCoroutine);
-			/*if()
+			if (bowCoroutine != null)
 			{
-				 // 대쉬중에 취소 캔슬시 등
-			}*/
-			if(bowSecondTime)
-			{
-				
+				StopCoroutine(bowCoroutine);
 			}
-			else if(bowFirstTime)
+			if (bowSecondTime)
 			{
-
+				StartCoroutine(ChargingShootArrow2());
+				Debug.Log("차징 2초");
+			}
+			else if (bowFirstTime)
+			{
+				StartCoroutine(ChargingShootArrow());
+				Debug.Log("차징 1초");
 			}
 			else
 			{
-
+				StartCoroutine(ShootArrow());
+				Debug.Log("차징 0초");
 			}
 			bowSecondTime = false;
 			bowFirstTime = false;
+			StartCoroutine(BowDelays());
 		}
 	}
 
@@ -139,6 +153,46 @@ public class Weapon : MonoBehaviour
 		bowFirstTime = true;
 		yield return new WaitForSeconds(bowTime);
 		bowSecondTime = true;
+	}
+
+	IEnumerator BowDelays()
+	{
+		yield return new WaitForSeconds(arrowRate);
+		canArrow = true;
+	}
+
+	IEnumerator ShootArrow()
+	{
+		Arrow arrow = Instantiate(arrowPrefab, arrowTransform.position, arrowTransform.rotation).GetComponent<Arrow>();
+		Rigidbody arrowRigidbody = arrow.gameObject.GetComponent<Rigidbody>();
+		arrow.MaxArrowRange = maxArrowRange;
+		arrow.Damage = bowFirstDamage;
+		arrow.ArrowSpeed = arrowSpeed;
+		Debug.Log((maxArrowRange / arrowSpeed));
+		yield return null;
+	}
+
+	IEnumerator ChargingShootArrow()
+	{
+		Arrow arrow = Instantiate(arrowPrefab, arrowTransform.position, arrowTransform.rotation).GetComponent<Arrow>();
+		Rigidbody arrowRigidbody = arrow.gameObject.GetComponent<Rigidbody>();
+		arrow.MaxArrowRange = maxArrowRange * 2;
+		arrow.Damage = bowSecondDamag;
+		arrow.ArrowSpeed = arrowSpeed * 2;
+
+		Debug.Log((maxArrowRange * 2 / arrowSpeed));
+		yield return null;
+	}
+
+	IEnumerator ChargingShootArrow2()
+	{
+		Arrow arrow = Instantiate(arrowPrefab, arrowTransform.position, arrowTransform.rotation).GetComponent<Arrow>();
+		Rigidbody arrowRigidbody = arrow.gameObject.GetComponent<Rigidbody>();
+		arrow.Damage = bowThirdDamage;
+		arrow.ArrowSpeed = arrowSpeed * 2;
+		arrow.MaxArrowRange = maxArrowRange * 2;
+		Debug.Log((maxArrowRange * 2 / arrowSpeed));
+		yield return null;
 	}
 
 	private void OnTriggerEnter(Collider other)

@@ -1,9 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using Unity.XR.OpenVR;
 using UnityEngine;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class PlayerState : BaseState<PlayerController.State>
 {
@@ -96,7 +91,7 @@ public class BowState : PlayerState
 			oner.transform.LookAt(oner.transform.position + nextVec);
 		}
 
-		// 라인 시작점 설정
+		/*// 라인 시작점 설정
 		oner.LineRenderer.SetPosition(0, oner.transform.position);
 		RaycastHit hit;
 		if (Physics.Raycast(oner.transform.position, oner.transform.forward, out hit, oner.LineSize, oner.BowWeapon.MonsterLayer))
@@ -125,7 +120,7 @@ public class BowState : PlayerState
 			// 라인 끝점 설정 (oner.LineSize 범위 내에 아무것도 충돌하지 않았을 때)
 			oner.LineRenderer.SetPosition(1, oner.transform.position + oner.transform.forward * oner.LineSize);
 			Debug.DrawRay(oner.transform.position, oner.transform.forward * oner.LineSize, Color.yellow);
-		}
+		}*/
 
 		if (!oner.PlayerInput.actions["Bow"].IsPressed())
 		{
@@ -135,6 +130,20 @@ public class BowState : PlayerState
 		{
 			oner.LineRenderer.enabled = true;
 		}
+
+		// 라인 시작점 설정
+		oner.LineRenderer.positionCount = 2;
+		oner.LineRenderer.SetPosition(0, oner.transform.position);
+		RaycastHit hit;
+		if (Physics.Raycast(oner.transform.position, oner.transform.forward, out hit, oner.LineSize, oner.WallLayer))
+		{
+			oner.LineRenderer.SetPosition(1, hit.point);
+		}
+		else
+		{
+			oner.LineRenderer.SetPosition(1, oner.transform.position + oner.transform.forward * oner.LineSize);
+		}
+
 	}
 
 	public override void Transition()

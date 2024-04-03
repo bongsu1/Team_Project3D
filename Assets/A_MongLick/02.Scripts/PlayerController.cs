@@ -1,7 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -87,7 +84,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 	{
 		Ray ray = followCamera.ScreenPointToRay(Input.mousePosition);
 		RaycastHit rayHit;
-		if(Physics.Raycast(ray, out rayHit, 100))
+		if (Physics.Raycast(ray, out rayHit, 100))
 		{
 			Vector3 nextVec = rayHit.point - transform.position;
 			nextVec.y = 0;
@@ -114,7 +111,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 		dashCoolTimer = StartCoroutine(DashCoolTime(5f));
 		dashVec = moveDir;
 	}
-	
+
 	IEnumerator DashCoolTime(float time)
 	{
 		yield return new WaitForSeconds(time);
@@ -164,12 +161,12 @@ public class PlayerController : MonoBehaviour, IDamagable
 
 	public void TakeDamage(int damage)
 	{
-		
+
 		Manager.Game.PlayerData.Hp -= damage;
 		Debug.Log($"플레이어 받은 데미지 : {damage}");
 		Debug.Log($"플레이어 남은 체력 : {Manager.Game.PlayerData.Hp}");
 
-		if(Manager.Game.PlayerData.Hp <= 0)
+		if (Manager.Game.PlayerData.Hp <= 0)
 		{
 			Manager.Game.PlayerData.Hp = 0;
 			Debug.Log($"플레이어 죽음");
