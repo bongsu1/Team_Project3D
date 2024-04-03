@@ -157,7 +157,7 @@ public class Monster : MonoBehaviour, IDamagable
                 return;
 
             nav.SetDestination(patrolPoint[patrolIndex].position);
-            if (Vector3.Distance(transform.position, patrolPoint[patrolIndex].transform.position) <= 0.1f)
+            if (Vector3.Distance(transform.position, patrolPoint[patrolIndex].transform.position) <= 0.5f)
             {
                 patrolIndex++;
                 if (patrolIndex == patrolPoint.Length)
@@ -180,17 +180,10 @@ public class Monster : MonoBehaviour, IDamagable
         yield return null;
     }
 
-    // test..
-    [ContextMenu("TakeDamage")]
-    public void DamageTest()
-    {
-        TakeDamage(10);
-    }
-
     public virtual void TakeDamage(int damage)
     {
         hp -= damage;
-
+        Debug.Log($"몬스터가 받은 데미지 : {damage}");
         if (canKnockback)
         {
             rigid.velocity = Vector3.zero;
@@ -218,7 +211,8 @@ public class Monster : MonoBehaviour, IDamagable
         }
         else
         {
-            nav.isStopped = true;
+            if (nav.enabled)
+                nav.isStopped = true;
             foreach (MeshRenderer mesh in meshs)
             {
                 mesh.material.color = hurtColor;
@@ -229,7 +223,8 @@ public class Monster : MonoBehaviour, IDamagable
             {
                 mesh.material.color = curColor;//Color.white;
             }
-            nav.isStopped = false;
+            if (nav.enabled)
+                nav.isStopped = false;
         }
     }
 

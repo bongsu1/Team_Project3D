@@ -15,7 +15,7 @@ TagManager:
   - DeadMonster
   - MonsterBullet
   - BaseCamp
-  - 
+  - SearchLayer
   - 
   - 
   - 
@@ -27,7 +27,7 @@ TagManager:
   - 
   - WeaPon
   - Wall
-  - 
+  - Invincibility
   - 
   - 
   - 

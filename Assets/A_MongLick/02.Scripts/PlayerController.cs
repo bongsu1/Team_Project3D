@@ -4,6 +4,9 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour, IDamagable
 {
+	[Header("Test")] // test 스테이트 확인용 빌드전 삭제 요망
+	[SerializeField] string curStateName; 
+
 	[Header("Component")]
 	[SerializeField] Rigidbody rigid;
 	public Rigidbody Rigid => rigid;
@@ -27,7 +30,6 @@ public class PlayerController : MonoBehaviour, IDamagable
 	[SerializeField] LayerMask wallLayer;
 	public LayerMask WallLayer => wallLayer;
 
-
 	[Header("Spec")]
 	[SerializeField] float moveSpeed;
 	[SerializeField] float turnSpeed;
@@ -45,8 +47,6 @@ public class PlayerController : MonoBehaviour, IDamagable
 
 	private Vector3 moveDir;
 
-	private Coroutine dashCoolTimer;
-
 	private void Start()
 	{
 		stateMachine.AddState(State.Move, new MoveState(this));
@@ -61,7 +61,6 @@ public class PlayerController : MonoBehaviour, IDamagable
 		Vector2 inputDir = value.Get<Vector2>();
 		moveDir.x = inputDir.x;
 		moveDir.z = inputDir.y;
-		moveDir.Normalize();
 	}
 
 	public void Move()
@@ -77,6 +76,8 @@ public class PlayerController : MonoBehaviour, IDamagable
 
 	private void Update()
 	{
+		//test 스테이트 확인용 빌드전 삭제 요망
+		curStateName = stateMachine.CurState;
 		stateMachine.Update();
 	}
 
@@ -106,16 +107,10 @@ public class PlayerController : MonoBehaviour, IDamagable
 
 	private void OnDash(InputValue value)
 	{
-		if (canDashCoolTime == false) return;
+		if (canDashCoolTime == false)
+			return;
 
-		dashCoolTimer = StartCoroutine(DashCoolTime(5f));
 		dashVec = moveDir;
-	}
-
-	IEnumerator DashCoolTime(float time)
-	{
-		yield return new WaitForSeconds(time);
-		canDashCoolTime = true;
 	}
 
 	public void DashMove()
@@ -169,7 +164,6 @@ public class PlayerController : MonoBehaviour, IDamagable
 		if (Manager.Game.PlayerData.Hp <= 0)
 		{
 			Manager.Game.PlayerData.Hp = 0;
-			Debug.Log($"플레이어 죽음");
 			StartCoroutine(spawnRoutine());
 		}
 	}

@@ -11,7 +11,7 @@ public class Arrow : MonoBehaviour
 	public float ArrowSpeed { set { arrowSpeed = value; } }
 	[SerializeField] Rigidbody rigid;
 	[SerializeField] float maxArrowRange;
-	public float MaxArrowRange { set { maxArrowRange = value; Debug.Log("아무거나 셋"); } }
+	public float MaxArrowRange { set { maxArrowRange = value; } }
 
 
 	private void OnTriggerEnter(Collider other)
@@ -21,7 +21,6 @@ public class Arrow : MonoBehaviour
 			IDamagable monster = other.GetComponent<IDamagable>();
 			monster?.TakeDamage(damage);
 			Destroy(gameObject);
-			Debug.Log($" 화살 데미지 : {damage}");
 		}
 	}
 
@@ -46,7 +45,6 @@ public class Arrow : MonoBehaviour
 
 	IEnumerator ArrowTime()
 	{
-		Debug.Log($"거리 : {maxArrowRange}");
 		yield return new WaitForSeconds(maxArrowRange / arrowSpeed);
 		Destroy(gameObject);
 	}

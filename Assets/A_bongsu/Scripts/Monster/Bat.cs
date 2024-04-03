@@ -10,7 +10,7 @@ public class Bat : Monster
 
     protected override IEnumerator AttackRotine()
     {
-        Debug.Log("Attack");
+        rigid.useGravity = false;
         curPos = transform.position;
 
         Vector3 targetDir = new Vector3((target.position - transform.position).x,
@@ -37,6 +37,7 @@ public class Bat : Monster
         }
         yield return new WaitForSeconds(0.1f);
         onAttack = false;
+        rigid.useGravity = true;
     }
 
     public void ChangeTraceState(Transform target)

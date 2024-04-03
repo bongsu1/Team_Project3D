@@ -74,7 +74,6 @@ public class Weapon : MonoBehaviour
 
 	IEnumerator firstAttackSwing()
 	{
-		Debug.Log("1번째 공격");
 		firstAttack = true;
 		swordArea.enabled = true;
 		yield return new WaitForSeconds(rate);
@@ -86,7 +85,6 @@ public class Weapon : MonoBehaviour
 
 	IEnumerator secondAttackSwing()
 	{
-		Debug.Log("2번째 공격");
 		secondAttack = true;
 		swordArea.enabled = true;
 		yield return new WaitForSeconds(rate);
@@ -100,7 +98,6 @@ public class Weapon : MonoBehaviour
 	IEnumerator thirdAttackSwing()
 	{
 		thirdAttack = true;
-		Debug.Log("3번째 공격");
 		firstAttack = false;
 		secondAttack = false;
 		swordArea.enabled = true;
@@ -117,11 +114,16 @@ public class Weapon : MonoBehaviour
 		{
 			if (!canArrow)
 				return;
-			canArrow = false;
+
 			bowCoroutine = StartCoroutine(BowTime());
 		}
 		else
 		{
+            if (!canArrow)
+                return;
+
+			canArrow = false;
+
 			if (bowCoroutine != null)
 			{
 				StopCoroutine(bowCoroutine);
@@ -129,17 +131,14 @@ public class Weapon : MonoBehaviour
 			if (bowSecondTime)
 			{
 				StartCoroutine(ChargingShootArrow2());
-				Debug.Log("차징 2초");
 			}
 			else if (bowFirstTime)
 			{
 				StartCoroutine(ChargingShootArrow());
-				Debug.Log("차징 1초");
 			}
 			else
 			{
 				StartCoroutine(ShootArrow());
-				Debug.Log("차징 0초");
 			}
 			bowSecondTime = false;
 			bowFirstTime = false;
@@ -168,7 +167,6 @@ public class Weapon : MonoBehaviour
 		arrow.MaxArrowRange = maxArrowRange;
 		arrow.Damage = bowFirstDamage;
 		arrow.ArrowSpeed = arrowSpeed;
-		Debug.Log((maxArrowRange / arrowSpeed));
 		yield return null;
 	}
 
@@ -180,7 +178,6 @@ public class Weapon : MonoBehaviour
 		arrow.Damage = bowSecondDamag;
 		arrow.ArrowSpeed = arrowSpeed * 2;
 
-		Debug.Log((maxArrowRange * 2 / arrowSpeed));
 		yield return null;
 	}
 
@@ -191,7 +188,6 @@ public class Weapon : MonoBehaviour
 		arrow.Damage = bowThirdDamage;
 		arrow.ArrowSpeed = arrowSpeed * 2;
 		arrow.MaxArrowRange = maxArrowRange * 2;
-		Debug.Log((maxArrowRange * 2 / arrowSpeed));
 		yield return null;
 	}
 
