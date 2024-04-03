@@ -4,60 +4,68 @@ using UnityEngine.AI;
 
 public class Monster : MonoBehaviour, IDamagable
 {
-    public enum State { Normal, Trace, Attack, Return, Die }
-    private StateMachine<State> stateMachine = new StateMachine<State>();
+    public enum State { Normal, Trace, Attack, Die }
+    protected StateMachine<State> stateMachine = new StateMachine<State>();
 
     public enum Type { Slime, Bat, Mummy, Mage }
+    public Type type;
 
-    [Header("Atrribute")]
+    /*[Header("Atrribute")]
     [SerializeField] int id;
     [SerializeField] string name;
     [SerializeField] Vector3 position;
-    [SerializeField] Vector3 rotation;
+    [SerializeField] Vector3 rotation;*/
     [Header("Spec")]
     [SerializeField] int hp;
     [SerializeField] int damage;
     [SerializeField] float moveSpeed;
 
+    [Header("Patrol")]
+    [SerializeField] LayerMask searchLayer;
+    [SerializeField] Transform[] patrolPoint; // 순찰지역
+    [SerializeField] float searchDistance;
+    [SerializeField] LayerMask baseCampLayer;
+
     [Header("Component")]
-    [SerializeField] Rigidbody rigid;
-    [SerializeField] NavMeshAgent nav;
     [SerializeField] SphereCollider searchRange;
-    [SerializeField] SphereCollider traceRange;
-    [SerializeField] Collider attackRange;
+    [SerializeField] protected Rigidbody rigid;
+    [SerializeField] NavMeshAgent nav;
     [SerializeField] MeshRenderer[] meshs;
 
-    [Header("Editor")]
-    [SerializeField] float searchDistance;
-    [SerializeField] float traceDistance;
-    [SerializeField] LayerMask searchLayer;
-    [SerializeField] float attackDelay;
-    [SerializeField] float attackRate;
-    [SerializeField] MonsterBullet bullet;
+    [Header("Attack")]
+    [SerializeField] protected MonsterBullet bullet;
+    [SerializeField] protected float attackDelay;
+    [SerializeField] protected float attackRate;
+    [SerializeField] protected float attackSpeed; // 돌진 스피드, 원거리면 총알 속도
+    [SerializeField] float attackDistance; // 공격 사거리
+
+    [Header("Hurt")]
     [SerializeField] Color curColor;
     [SerializeField] Color hurtColor;
-    [SerializeField] float groggyTime;
+    [SerializeField] bool canKnockback;
 
-    // test..
-    [Header("Attack")]
-    [SerializeField] float attackSpeed; // 돌진 스피드
-    [SerializeField] float attackDistance; // 공격 거리
-
-    // test..
-    private Transform target; // 플레이어 위치
+    protected Transform target; // 플레이어 위치
+    protected bool isCamp = true;
+    protected bool onAttack;
+    public bool OnAttack => onAttack;
 
     // property..
     public NavMeshAgent Nav => nav;
     public Transform Target => target;
+    public Rigidbody Rigid => rigid;
+    public float SearchDistance { get { return searchDistance; } set { searchDistance = value; } }
     public float AttackDistance => attackDistance;
+    public bool IsCamp => isCamp;
 
     private void Awake()
     {
         meshs = GetComponentsInChildren<MeshRenderer>();
         nav.speed = moveSpeed;
         bullet.Damage = damage;
-        searchRange.radius = searchDistance;
-        traceRange.radius = traceDistance;
+        if (type != Type.Bat)
+        {
+            searchRange.radius = searchDistance;
+        }
     }
 
     private void Start()
@@ -65,7 +73,6 @@ public class Monster : MonoBehaviour, IDamagable
         stateMachine.AddState(State.Normal, new M_NoramlState(this));
         stateMachine.AddState(State.Trace, new M_TraceState(this));
         stateMachine.AddState(State.Attack, new M_AttackState(this));
-        stateMachine.AddState(State.Return, new M_ReturnState(this));
         stateMachine.AddState(State.Die, new M_DieState(this));
 
         stateMachine.Start(State.Normal);
@@ -86,73 +93,91 @@ public class Monster : MonoBehaviour, IDamagable
         if (searchRange.enabled)
         {
             Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(transform.position, searchDistance);
+            Gizmos.DrawWireSphere(searchRange.transform.position, searchDistance);
         }
-
-        if (traceRange.enabled)
+        else
         {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, traceDistance);
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(transform.position, attackDistance);
         }
     }
 
-    // test.. 
-    int count;
+    int targetCount;
     private void OnTriggerEnter(Collider other)
     {
-        if (count > 0)
+        // 박쥐는 집단 행동으로 개체간 트리거는 무시
+        if (type == Type.Bat)
+            return;
+
+        if (((1 << other.gameObject.layer) & baseCampLayer) != 0 && !isCamp)
+        {
+            StartCoroutine(ComebackCampRoutine());
+        }
+
+        if (targetCount > 0 || !isCamp)
             return;
 
         if (((1 << other.gameObject.layer) & searchLayer) != 0)
         {
-            count++;
-            target = other.GetComponent<TestPlayer>().transform;
+            targetCount++;
+            target = other.transform;
             searchRange.enabled = false;
-            traceRange.enabled = true;
             stateMachine.ChangeState(State.Trace);
         }
     }
 
+    IEnumerator ComebackCampRoutine()
+    {
+        yield return new WaitForSeconds(2f);
+        searchRange.enabled = true;
+        isCamp = true;
+    }
+
     private void OnTriggerExit(Collider other)
     {
-        if ((((1 << other.gameObject.layer) & searchLayer) != 0)
-            && Vector3.Distance(target.position, transform.position) >= traceDistance)
+        // 박쥐는 집단 행동으로 개체간 트리거는 무시
+        if (type == Type.Bat)
+            return;
+
+        if (((1 << other.gameObject.layer) & baseCampLayer) != 0)
         {
-            count--;
-            searchRange.enabled = true;
-            traceRange.enabled = false;
-            stateMachine.ChangeState(State.Return);
+            isCamp = false;
+            targetCount--;
         }
     }
 
     #region Method
 
+    int patrolIndex;
+    public void Patrol()
+    {
+        if (patrolPoint.Length > 0)
+        {
+            if (!nav.enabled)
+                return;
+
+            nav.SetDestination(patrolPoint[patrolIndex].position);
+            if (Vector3.Distance(transform.position, patrolPoint[patrolIndex].transform.position) <= 0.1f)
+            {
+                patrolIndex++;
+                if (patrolIndex == patrolPoint.Length)
+                {
+                    patrolIndex = 0;
+                }
+            }
+        }
+    }
+
     public virtual void Attack()
     {
         // test..
+        onAttack = true;
         StartCoroutine(AttackRotine());
     }
 
     protected virtual IEnumerator AttackRotine()
     {
-        // test..
-        float time = 0;
-        while (time <= 1)
-        {
-            Vector3 targetDir = new Vector3((target.position - transform.position).x,
-                transform.position.y, (target.position - transform.position).z);
-            transform.forward = Vector3.Lerp(transform.forward, target.position - transform.position, time);
-            time += Time.deltaTime / attackDelay;
-            yield return null;
-        }
-        attackRange.enabled = true;
-        rigid.velocity = transform.forward * attackSpeed + Vector3.up * 3f;
-
-        yield return new WaitForSeconds(0.5f);
-        attackRange.enabled = false;
-
-        yield return new WaitForSeconds(attackRate - 0.5f);
-        stateMachine.ChangeState(State.Trace);
+        yield return null;
     }
 
     // test..
@@ -162,27 +187,26 @@ public class Monster : MonoBehaviour, IDamagable
         TakeDamage(10);
     }
 
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
         hp -= damage;
 
-        if (attackRange.enabled)
+        if (canKnockback)
         {
-            attackRange.enabled = false;
+            rigid.velocity = Vector3.zero;
         }
-        rigid.velocity = Vector3.zero; // 넉백을 할지 멈출지
 
         StartCoroutine(HurtRoutine(hp <= 0));
         if (hp <= 0)
         {
             hp = 0;
             stateMachine.ChangeState(State.Die);
-            Destroy(gameObject, 4f);
+            Destroy(gameObject, 5f);
             // 아이템 드랍
         }
     }
 
-    IEnumerator HurtRoutine(bool isDead)
+    protected virtual IEnumerator HurtRoutine(bool isDead)
     {
         if (isDead)
         {
@@ -194,6 +218,7 @@ public class Monster : MonoBehaviour, IDamagable
         }
         else
         {
+            nav.isStopped = true;
             foreach (MeshRenderer mesh in meshs)
             {
                 mesh.material.color = hurtColor;
@@ -204,6 +229,7 @@ public class Monster : MonoBehaviour, IDamagable
             {
                 mesh.material.color = curColor;//Color.white;
             }
+            nav.isStopped = false;
         }
     }
 

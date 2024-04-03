@@ -7,7 +7,23 @@ public class MonsterState : BaseState<Monster.State>
 
 public class M_NoramlState : MonsterState
 {
-    // update 활동범위내에서 이동 구현
+    public override void Enter()
+    {
+        oner.Nav.enabled = true;
+        oner.Rigid.useGravity = false;
+    }
+
+    public override void Update()
+    {
+        oner.Rigid.velocity = Vector3.zero;
+        oner.Patrol();
+    }
+
+    public override void Exit()
+    {
+        oner.Nav.enabled = false;
+        oner.Rigid.useGravity = true;
+    }
 
     public M_NoramlState(Monster oner)
     {
@@ -20,22 +36,29 @@ public class M_TraceState : MonsterState
     public override void Enter()
     {
         oner.Nav.enabled = true;
+        oner.Rigid.useGravity = false;
     }
 
     public override void Update()
     {
+        oner.Rigid.velocity = Vector3.zero;
         oner.Nav.SetDestination(oner.Target.position);
     }
 
     public override void Exit()
     {
         oner.Nav.enabled = false;
+        oner.Rigid.useGravity = true;
     }
     public override void Transition()
     {
         if (Vector3.Distance(oner.transform.position, oner.Target.position) < oner.AttackDistance)
         {
             ChangeState(Monster.State.Attack);
+        }
+        else if (!oner.IsCamp)
+        {
+            ChangeState(Monster.State.Normal);
         }
     }
 
@@ -52,19 +75,19 @@ public class M_AttackState : MonsterState
         oner.Attack();
     }
 
-    public M_AttackState(Monster oner)
+    public override void Transition()
     {
-        this.oner = oner;
+        if (!oner.OnAttack && oner.IsCamp)
+        {
+            ChangeState(Monster.State.Trace);
+        }
+        else if (!oner.OnAttack && !oner.IsCamp)
+        {
+            ChangeState(Monster.State.Normal);
+        }
     }
-}
 
-public class M_ReturnState : MonsterState
-{
-    // 범위를 벗어나면 원래 위치로 돌아가는 기능 구현 예정
-    // 구역을 벗어나는 경우는 구역 지정후 그곳을 벗어나면 돌아가기
-    // 플레이어가 멀어지는 경우는 플레이어가 일정 거리를 벗어나면 돌아가기 
-
-    public M_ReturnState(Monster oner)
+    public M_AttackState(Monster oner)
     {
         this.oner = oner;
     }
