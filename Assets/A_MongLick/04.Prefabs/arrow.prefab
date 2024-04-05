@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9060251811925905835}
   - component: {fileID: 3186597746471890697}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: HitRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,7 +51,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.1, y: 1.1, z: 1.1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6126943530184004239
 GameObject:
@@ -201,16 +201,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b29042e7dc8a7f4c916c3e68ffe5860, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MonsterLayer:
+  monsterLayer:
     serializedVersion: 2
     m_Bits: 64
-  WallLayer:
+  wallLayer:
     serializedVersion: 2
     m_Bits: 2097152
-  damage: 0
-  arrowSpeed: 0
   rigid: {fileID: 1486217170660636443}
-  maxArrowRange: 0
 --- !u!1 &7782253900714333863
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,7 +16,7 @@
                 },
                 {
                     "name": "Sword",
-                    "type": "PassThrough",
+                    "type": "Button",
                     "id": "6630c7ee-8d21-4bc6-aeb0-cf87fa8449dd",
                     "expectedControlType": "Button",
                     "processors": "",
@@ -36,24 +36,6 @@
                     "name": "Dash",
                     "type": "Button",
                     "id": "34dd8564-000c-4d06-9f34-da87e4a0b4c9",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "SkillQ",
-                    "type": "Button",
-                    "id": "9f7ccffe-8446-4c4d-806a-725cbd5e8c8e",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "SkillE",
-                    "type": "Button",
-                    "id": "811c209e-74f1-452d-a5ca-25cdf62412f1",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -96,7 +78,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Point",
+                    "name": "Pointer",
                     "type": "Value",
                     "id": "e1c0bcc2-0f44-40f0-aadc-96a64ec1119c",
                     "expectedControlType": "Vector2",
@@ -196,28 +178,6 @@
                 },
                 {
                     "name": "",
-                    "id": "56d4f8cb-e75d-4f15-a778-67444d96ec72",
-                    "path": "<Keyboard>/q",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SkillQ",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "36b7a346-a9ca-4654-aa02-5d3f6c3248b6",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SkillE",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "c3918bdc-a883-4809-adc1-e0a8ac7dec5f",
                     "path": "<Keyboard>/1",
                     "interactions": "",
@@ -267,7 +227,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Point",
+                    "action": "Pointer",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
