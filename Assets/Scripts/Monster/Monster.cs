@@ -10,6 +10,8 @@ public class Monster : MonoBehaviour, IDamagable
     public enum Type { Slime, Bat, Mummy, Mage }
     public Type type;
 
+    [Header("Test")]
+    [SerializeField] string curState;
     /*[Header("Atrribute")]
     [SerializeField] int id;
     [SerializeField] string name;
@@ -22,8 +24,8 @@ public class Monster : MonoBehaviour, IDamagable
 
     [Header("Patrol")]
     [SerializeField] LayerMask searchLayer;
-    [SerializeField] Transform[] patrolPoint; // 순찰지역
     [SerializeField] float searchDistance;
+    [SerializeField] Transform[] patrolPoint; // 순찰지역
     [SerializeField] LayerMask baseCampLayer;
 
     [Header("Component")]
@@ -31,6 +33,7 @@ public class Monster : MonoBehaviour, IDamagable
     [SerializeField] protected Rigidbody rigid;
     [SerializeField] NavMeshAgent nav;
     [SerializeField] MeshRenderer[] meshs;
+    [SerializeField] protected Animator animator;
 
     [Header("Attack")]
     [SerializeField] protected MonsterBullet bullet;
@@ -54,6 +57,7 @@ public class Monster : MonoBehaviour, IDamagable
     public NavMeshAgent Nav => nav;
     public Transform Target => target;
     public Rigidbody Rigid => rigid;
+    public Animator Animator => animator;
     public float SearchDistance { get { return searchDistance; } set { searchDistance = value; } }
     public float AttackDistance => attackDistance;
     public bool IsCamp => isCamp;
@@ -81,6 +85,7 @@ public class Monster : MonoBehaviour, IDamagable
 
     private void Update()
     {
+        curState = stateMachine.CurState;
         if (isDead) return;
         stateMachine.Update();
     }
@@ -198,6 +203,21 @@ public class Monster : MonoBehaviour, IDamagable
             hp = 0;
             isDead = true;
             nav.enabled = false;
+            switch (type)
+            {
+                case Type.Slime:
+                    Collider slimeAttackRange = bullet.GetComponent<Collider>();
+                    slimeAttackRange.enabled = false;
+                    break;
+                case Type.Bat:
+                    Collider batAttackRange = bullet.GetComponent<Collider>();
+                    batAttackRange.enabled = false;
+                    break;
+                case Type.Mummy:
+                    break;
+                case Type.Mage:
+                    break;
+            }
             stateMachine.ChangeState(State.Die);
             Destroy(gameObject, 5f);
             // 아이템 드랍

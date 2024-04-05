@@ -15,7 +15,9 @@ public class Slime : Monster
             yield return null;
         }
         rigid.velocity = transform.forward * attackSpeed + Vector3.up * 3f;
-
+        animator.SetTrigger("DoAttack");
+        yield return new WaitForSeconds(0.7f);
+        rigid.velocity = Vector3.zero;
         yield return new WaitForSeconds(attackRate);
         onAttack = false;
     }

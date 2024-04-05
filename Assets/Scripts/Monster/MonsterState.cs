@@ -9,6 +9,17 @@ public class M_NoramlState : MonsterState
 {
     public override void Enter()
     {
+        switch (oner.type)
+        {
+            case Monster.Type.Slime:
+                break;
+            case Monster.Type.Bat:
+                break;
+            case Monster.Type.Mummy:
+                break;
+            case Monster.Type.Mage:
+                break;
+        }
         oner.Nav.enabled = true;
         oner.Rigid.useGravity = false;
     }
@@ -35,6 +46,18 @@ public class M_TraceState : MonsterState
 {
     public override void Enter()
     {
+        switch (oner.type)
+        {
+            case Monster.Type.Slime:
+                oner.Animator.SetTrigger("DoTrace");
+                break;
+            case Monster.Type.Bat:
+                break;
+            case Monster.Type.Mummy:
+                break;
+            case Monster.Type.Mage:
+                break;
+        }
         oner.Nav.enabled = true;
         oner.Rigid.useGravity = false;
     }
@@ -95,6 +118,23 @@ public class M_AttackState : MonsterState
 
 public class M_DieState : MonsterState
 {
+    public override void Enter()
+    {
+        oner.Rigid.velocity = Vector3.zero;
+        switch (oner.type)
+        {
+            case Monster.Type.Slime:
+                oner.Animator.Play("Die");
+                break;
+            case Monster.Type.Bat:
+                break;
+            case Monster.Type.Mummy:
+                break;
+            case Monster.Type.Mage:
+                break;
+        }
+    }
+
     public M_DieState(Monster oner)
     {
         this.oner = oner;
