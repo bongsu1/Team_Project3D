@@ -3,27 +3,191 @@
     "maps": [
         {
             "name": "Player",
-            "id": "1830f6d1-f8f7-4bfd-8325-c7c02813af95",
+            "id": "97c35555-8bf6-40e4-b0ad-55794476eb28",
             "actions": [
                 {
-                    "name": "Jump",
+                    "name": "Move",
+                    "type": "PassThrough",
+                    "id": "95515cb0-3d8d-4bdc-a1f2-b72b58683119",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Sword",
                     "type": "Button",
-                    "id": "1b9e0ab4-4032-4898-b6df-61a774cea3f6",
+                    "id": "6630c7ee-8d21-4bc6-aeb0-cf87fa8449dd",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Bow",
+                    "type": "PassThrough",
+                    "id": "000b58a3-9194-4a08-8bcb-35379aa80cff",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Dash",
+                    "type": "Button",
+                    "id": "34dd8564-000c-4d06-9f34-da87e4a0b4c9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Interaction",
+                    "type": "Button",
+                    "id": "d7e7ad93-0b8d-4428-ba52-5ec15b529714",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Item1",
+                    "type": "Button",
+                    "id": "b0cd6315-3925-4a2f-98d2-012eee3cd40a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pointer",
+                    "type": "Value",
+                    "id": "e1c0bcc2-0f44-40f0-aadc-96a64ec1119c",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
                 {
+                    "name": "Keyboard",
+                    "id": "2c2af8f2-98bf-4b0b-a09f-f8266833e21c",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "9866fbf9-b03d-45dc-8a2c-0295abc57317",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "892ea6db-5b81-4d5d-a0cc-020e49ed2c4a",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "4476ed55-12ff-48ac-a4b9-0c44c7ad9801",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "2d4af68b-7332-4e51-920c-b8a74581c6e4",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "",
-                    "id": "f25b45b6-9542-43c6-92c7-ea54e82b3a75",
+                    "id": "6b26311f-8d43-43a8-8de3-e8b48017c234",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Sword",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5827df5f-0db3-4857-9d69-577106db1c04",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Bow",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ec62fe5b-29a5-40cf-b183-857fc25728e7",
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Jump",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c3918bdc-a883-4809-adc1-e0a8ac7dec5f",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Item1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bdf48995-390c-47ce-ab61-c1b31e816059",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interaction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "429a13fb-f78b-4b55-a4c9-6c3fee1cd76a",
+                    "path": "<Pointer>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pointer",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
