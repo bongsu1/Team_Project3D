@@ -3,51 +3,52 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+	[Header("Re")]
+    [SerializeField] 
+	float attackDelay; // 검 공격은 선 딜레이 활 공격은 쿨타임
+	public float AttackDelay => attackDelay;
+
 	[Header("Component")]
-	public BoxCollider swordArea;
-	public GameObject arrowPrefab;
-	protected PlayerController oner;
-	public Rigidbody arrowRigid;
+	public BoxCollider swordArea;//... 지워 (소드 전용)
+	public GameObject weaponArrowPrefab;//... 지워 (보우 전용)
+    public Rigidbody arrowRigid;//... 지워
 
-	[Header("Spec")]
-	public int damage;
-	public int thirdAttackDamage;
-	[SerializeField] float rate;
-	public float Rate => rate;
-	public float arrowRate;
-	[SerializeField] float thirdRate;
-	[SerializeField] float attackTime = 1f;
-	[SerializeField] bool firstAttack = false;
-	[SerializeField] bool secondAttack = false;
-	[SerializeField] bool thirdAttack = false;
-	[SerializeField] bool canAttack = true;
-	[SerializeField] float arrowSize;
-	[SerializeField] float arrowChargingSize;
-	[SerializeField] float maxArrowRange;
-	[SerializeField] float arrowSpeed;
-	[SerializeField] Transform arrowTransform;
-	[SerializeField] bool isArrowShot;
-	[SerializeField] bool isArrowChargingShot;
-	[SerializeField] bool canArrow = true;
-	// 스크립트 안에서 하는거 다 뺴기
+    [Header("Spec")]
+	[SerializeField] int damage;//... 지워 (소드 전용)
+    public int thirdAttackDamage;//... 지워 (소드 전용)
+	public float arrowRate;//... 따로있을 필요가 있나?
+	[SerializeField] float thirdRate;//... 지워 (소드 전용)
+	[SerializeField] float weaponAttackTime;//... 지워 (소드 전용)
+    [SerializeField] bool firstAttack = false;//... 지워 (소드 전용) 스테이트머신에서 구현
+    [SerializeField] bool secondAttack = false;//... 지워 (소드 전용) 스테이트머신에서 구현
+    [SerializeField] bool thirdAttack = false;//... 지워 (소드 전용) 스테이트머신에서 구현
+    [SerializeField] bool canAttack = true;//... 지워
+    [SerializeField] float arrowSize;//...
+	[SerializeField] float arrowChargingSize;//...
+	[SerializeField] float maxArrowRange;//... 지워 (보우 전용)
+	[SerializeField] float arrowSpeed;//... 지워 (보우 전용)
+    [SerializeField] Transform arrowTransform;//... 지워 (보우 전용)
+    [SerializeField] bool isArrowShot;//... 지워 (보우 전용) 스테이트머신에서 구현
+    [SerializeField] bool isArrowChargingShot;//... 지워 (보우 전용) 스테이트머신에서 구현
+    [SerializeField] bool canArrow = true;//... 지워 (보우 전용) 스테이트머신에서 구현
 
-	[SerializeField] bool bowFirstTime = false;
-	public bool BowFirstTime => bowFirstTime;
-	[SerializeField] bool bowSecondTime = false;
-	public bool BowSecondTime => bowSecondTime;
-	[SerializeField] float bowTime;
-	public int bowFirstDamage = 10;
-	public int bowSecondDamag = 20;
-	public int bowThirdDamage = 30;
+    [SerializeField] bool bowFirstTime = false;//... 지워 (보우 전용) 스테이트머신에서 구현
+    public bool BowFirstTime => bowFirstTime;
+    [SerializeField] bool bowSecondTime = false;//... 지워 (보우 전용) 스테이트머신에서 구현
+    public bool BowSecondTime => bowSecondTime;
+	[SerializeField] float bowTime;//... 지워 (보우 전용) 스테이트머신에서 구현
+    public int bowFirstDamage = 10;//... 지워 (보우 전용)
+    public int bowSecondDamag = 20;//... 지워 (보우 전용)
+    public int bowThirdDamage = 30;//... 지워 (보우 전용)
 
-	private Coroutine firstCoroutine;
+    private Coroutine firstCoroutine;
 	private Coroutine secondCoroutine;
 
 	private Coroutine bowCoroutine;
 
-	[Header("Attack")]
-	[SerializeField] LayerMask monsterLayer;
-	public LayerMask MonsterLayer => monsterLayer;
+	[Header("Weapon")]
+	[SerializeField] LayerMask weaponMonsterLayer;//... 지워 (소드 전용)
+    public LayerMask WeaponMonsterLayer => weaponMonsterLayer;
 
 
 	public void Sword()
@@ -76,10 +77,10 @@ public class Weapon : MonoBehaviour
 	{
 		firstAttack = true;
 		swordArea.enabled = true;
-		yield return new WaitForSeconds(rate);
+		yield return new WaitForSeconds(attackDelay);
 		canAttack = true;
 		swordArea.enabled = false;
-		yield return new WaitForSeconds(attackTime);
+		yield return new WaitForSeconds(weaponAttackTime);
 		firstAttack = false;
 	}
 
@@ -87,10 +88,10 @@ public class Weapon : MonoBehaviour
 	{
 		secondAttack = true;
 		swordArea.enabled = true;
-		yield return new WaitForSeconds(rate);
+		yield return new WaitForSeconds(attackDelay);
 		canAttack = true;
 		swordArea.enabled = false;
-		yield return new WaitForSeconds(attackTime);
+		yield return new WaitForSeconds(weaponAttackTime);
 		firstAttack = false;
 		secondAttack = false;
 	}
@@ -101,7 +102,7 @@ public class Weapon : MonoBehaviour
 		firstAttack = false;
 		secondAttack = false;
 		swordArea.enabled = true;
-		yield return new WaitForSeconds(rate);
+		yield return new WaitForSeconds(attackDelay);
 		swordArea.enabled = false;
 		thirdAttack = false;
 		yield return new WaitForSeconds(thirdRate);
@@ -168,9 +169,9 @@ public class Weapon : MonoBehaviour
 
 	IEnumerator ShootArrow()
 	{
-		Arrow arrow = Instantiate(arrowPrefab, arrowTransform.position, arrowTransform.rotation).GetComponent<Arrow>();
+		Arrow arrow = Instantiate(weaponArrowPrefab, arrowTransform.position, arrowTransform.rotation).GetComponent<Arrow>();
 		Rigidbody arrowRigidbody = arrow.gameObject.GetComponent<Rigidbody>();
-		arrow.MaxArrowRange = maxArrowRange;
+		arrow.ArrowRange = maxArrowRange;
 		arrow.Damage = bowFirstDamage;
 		arrow.ArrowSpeed = arrowSpeed;
 		yield return null;
@@ -178,9 +179,9 @@ public class Weapon : MonoBehaviour
 
 	IEnumerator ChargingShootArrow()
 	{
-		Arrow arrow = Instantiate(arrowPrefab, arrowTransform.position, arrowTransform.rotation).GetComponent<Arrow>();
+		Arrow arrow = Instantiate(weaponArrowPrefab, arrowTransform.position, arrowTransform.rotation).GetComponent<Arrow>();
 		Rigidbody arrowRigidbody = arrow.gameObject.GetComponent<Rigidbody>();
-		arrow.MaxArrowRange = maxArrowRange * 2;
+		arrow.ArrowRange = maxArrowRange * 2;
 		arrow.Damage = bowSecondDamag;
 		arrow.ArrowSpeed = arrowSpeed * 2;
 
@@ -189,17 +190,17 @@ public class Weapon : MonoBehaviour
 
 	IEnumerator ChargingShootArrow2()
 	{
-		Arrow arrow = Instantiate(arrowPrefab, arrowTransform.position, arrowTransform.rotation).GetComponent<Arrow>();
+		Arrow arrow = Instantiate(weaponArrowPrefab, arrowTransform.position, arrowTransform.rotation).GetComponent<Arrow>();
 		Rigidbody arrowRigidbody = arrow.gameObject.GetComponent<Rigidbody>();
 		arrow.Damage = bowThirdDamage;
 		arrow.ArrowSpeed = arrowSpeed * 2;
-		arrow.MaxArrowRange = maxArrowRange * 2;
+		arrow.ArrowRange = maxArrowRange * 2;
 		yield return null;
 	}
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if (monsterLayer.Contain(other.gameObject.layer))
+		if (weaponMonsterLayer.Contain(other.gameObject.layer))
 		{
 			IDamagable damagable = other.GetComponent<IDamagable>();
 			if (damagable != null)

@@ -8,13 +8,13 @@ public class PlayerController : MonoBehaviour, IDamagable
 	[SerializeField] string curStateName; 
 
 	[Header("Component")]
-	[SerializeField] Rigidbody rigid;
+	[SerializeField] Rigidbody rigid;//...
 	public Rigidbody Rigid => rigid;
 	[SerializeField] Weapon swordWeapon;
 	public Weapon SwordWeapon => swordWeapon;
 	[SerializeField] Weapon bowWeapon;
 	public Weapon BowWeapon => bowWeapon;
-	[SerializeField] PlayerInput playerInput;
+	[SerializeField] PlayerInput playerInput;//...
 	public PlayerInput PlayerInput => playerInput;
 	[SerializeField] int playerLayer;
 	public int PlayerLayer => playerLayer;
@@ -23,35 +23,35 @@ public class PlayerController : MonoBehaviour, IDamagable
 	[SerializeField] Transform spawnPonit;
 	[SerializeField] Material lineMaterial;
 	public Material LineMaterial => lineMaterial;
-	[SerializeField] LineRenderer lineRenderer;
+	[SerializeField] LineRenderer lineRenderer;//...
 	public LineRenderer LineRenderer => lineRenderer;
-	[SerializeField] LayerMask wallLayer;
+	[SerializeField] LayerMask wallLayer;//...
 	public LayerMask WallLayer => wallLayer;
-	[SerializeField] LayerMask groundLayer;
+	[SerializeField] LayerMask groundLayer;//...
 	public LayerMask GroundLayer => groundLayer;
-	Vector3 dashVec;
+	Vector3 dashVec;//...
 	public Vector3 DashVec { get { return dashVec; } set { dashVec = value; } }
-	Vector3 moveDir;
+	Vector3 moveDir;//...
 	public Vector3 MoveDir { get { return moveDir; } set { moveDir = value; } }
 
 	[Header("Spec")]
-	[SerializeField] float moveSpeed;
-	[SerializeField] float turnSpeed;
-	[SerializeField] float dashSpeed;
-	[SerializeField] float dashTime;
-	[SerializeField] bool canDashCoolTime = true;
-	[SerializeField] float lineSize;
+	[SerializeField] float moveSpeed;//...
+	[SerializeField] float turnSpeed;//...
+	[SerializeField] float dashSpeed;//...
+	[SerializeField] float dashTime;//...
+	[SerializeField] bool canDashCoolTime = true;//...
+	[SerializeField] float lineSize;//...
 	public float LineSize => lineSize;
 
 	public bool CanDashCoolTime { get { return canDashCoolTime; } set { canDashCoolTime = value; } }
 	public float DashTime => dashTime;
 
-	public enum State { Move, Sword, Dash, Bow }
-	private StateMachine<State> stateMachine = new StateMachine<State>();
+	public enum State { Move, Sword, Dash, Bow }//...
+	private StateMachine<State> stateMachine = new StateMachine<State>();//...
 
 	
 
-	private void Start()
+	private void Start()//...
 	{
 		stateMachine.AddState(State.Move, new MoveState(this));
 		stateMachine.AddState(State.Sword, new SwordState(this));
@@ -60,25 +60,25 @@ public class PlayerController : MonoBehaviour, IDamagable
 		stateMachine.Start(State.Move);
 	}
 
-	private void OnMove(InputValue value)
+	private void OnMove(InputValue value)//...
 	{
 		Vector2 inputDir = value.Get<Vector2>();
 		moveDir.x = inputDir.x;
 		moveDir.z = inputDir.y;
 	}
 
-	public void Move()
+	public void Move()//...
 	{
 		transform.forward = Vector3.Lerp(transform.forward, moveDir, turnSpeed * Time.deltaTime);
 		rigid.MovePosition(gameObject.transform.position + moveDir * moveSpeed * Time.deltaTime);
 	}
 
-	private void FixedUpdate()
+	private void FixedUpdate()//...
 	{
 		stateMachine.FixedUpdate();
 	}
 
-	private void Update()
+	private void Update()//...
 	{
 		//test 스테이트 확인용 빌드전 삭제 요망
 		curStateName = stateMachine.CurState;
@@ -102,45 +102,9 @@ public class PlayerController : MonoBehaviour, IDamagable
 		swordWeapon.Sword();
 	}
 
-	public void DashMove()
+	public void DashMove()//...
 	{
 		rigid.velocity = new Vector3(dashVec.x, 0, dashVec.z) * dashSpeed;
-	}
-
-	private void OnSkillQ(InputValue value)
-	{
-
-	}
-
-	private void OnSkillE(InputValue value)
-	{
-
-	}
-
-	private void OnInteraction(InputValue value)
-	{
-
-	}
-
-	private void OnItem1(InputValue value)
-	{
-
-	}
-
-	private void OnItem2(InputValue value)
-	{
-
-	}
-
-	private void OnItem3(InputValue value)
-	{
-
-	}
-
-	[ContextMenu("Test")]
-	public void TestDamage()
-	{
-		TakeDamage(40);
 	}
 
 	public void TakeDamage(int damage)
@@ -163,5 +127,4 @@ public class PlayerController : MonoBehaviour, IDamagable
 		transform.position = spawnPonit.position;
 		Manager.Game.PlayerData.Hp = 100;
 	}
-
 }
