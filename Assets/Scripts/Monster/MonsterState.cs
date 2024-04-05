@@ -56,6 +56,7 @@ public class M_TraceState : MonsterState
             case Monster.Type.Mummy:
                 break;
             case Monster.Type.Mage:
+                oner.Animator.SetTrigger("DoTrace");
                 break;
         }
         oner.Nav.enabled = true;
@@ -131,6 +132,7 @@ public class M_DieState : MonsterState
             case Monster.Type.Mummy:
                 break;
             case Monster.Type.Mage:
+                oner.Animator.Play("Die");
                 break;
         }
     }

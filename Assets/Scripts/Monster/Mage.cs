@@ -8,6 +8,12 @@ public class Mage : Monster
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] GameObject castBox; // 캐스팅하면서 보일 것
 
+    protected override void Start()
+    {
+        base.Start();
+        animator.Play("Spawn");
+    }
+
     Coroutine attackRoutine;
     public override void Attack()
     {
@@ -17,11 +23,10 @@ public class Mage : Monster
 
     protected override IEnumerator AttackRotine()
     {
-        // 캐스팅
+        animator.SetTrigger("DoAttack");
         float time = 0;
         while (time <= 1)
         {
-            // 캐스팅 애니메이션
             castBox.SetActive(true);
             castBox.transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one * 0.5f, time);
 

@@ -73,7 +73,7 @@ public class Monster : MonoBehaviour, IDamagable
         }
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         stateMachine.AddState(State.Normal, new M_NoramlState(this));
         stateMachine.AddState(State.Trace, new M_TraceState(this));
@@ -220,7 +220,6 @@ public class Monster : MonoBehaviour, IDamagable
             }
             stateMachine.ChangeState(State.Die);
             Destroy(gameObject, 5f);
-            // 아이템 드랍
         }
     }
 
