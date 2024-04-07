@@ -17,6 +17,9 @@ public class Player : MonoBehaviour, IDamagable
     PlayerInput input;
     public PlayerInput Input => input;
     [SerializeField] Inventory inventory;
+    [SerializeField]
+    Animator animator;
+    public Animator Animator => animator;
 
     [Header("Move")]
     [SerializeField] float moveSpeed;
