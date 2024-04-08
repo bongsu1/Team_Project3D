@@ -11,6 +11,7 @@ public class NormalState : PlayerState
 {
     public override void FixedUpdate()
     {
+        oner.Animator.SetFloat("MoveSpeed", oner.MoveDir.magnitude);
         oner.Move();
     }
 
@@ -21,6 +22,8 @@ public class NormalState : PlayerState
 
     public override void Exit()
     {
+        oner.Animator.SetFloat("MoveSpeed", 0f);
+
         oner.Rigid.velocity = Vector3.zero;
     }
 
@@ -54,6 +57,9 @@ public class FirstSwordState : PlayerState
 
     public override void Enter()
     {
+        oner.IsSword = true;
+        oner.Animator.Play("Combo1");
+
         oner.Turn(false);
         isAttack = true;
         attackRoutine = oner.StartCoroutine(AttackRoutine());
@@ -108,6 +114,8 @@ public class SecondSwordState : PlayerState
 
     public override void Enter()
     {
+        oner.Animator.Play("Combo2");
+
         oner.Turn(false);
         isAttack = true;
         attackRoutine = oner.StartCoroutine(AttackRoutine());
@@ -161,6 +169,8 @@ public class ThirdSwordState : PlayerState
 
     public override void Enter()
     {
+        oner.Animator.Play("Combo3");
+
         oner.Turn(false);
         isAttack = true;
         attackRoutine = oner.StartCoroutine(AttackRoutine());
@@ -201,11 +211,16 @@ public class ThirdSwordState : PlayerState
 
 public class BowState : PlayerState
 {
+    int shotCount;
     int charged;
     Coroutine chargingRoutine;
 
     public override void Enter()
     {
+        shotCount = 1;
+        oner.IsSword = false;
+        oner.Animator.Play("Sniping_In");
+
         oner.Bow.Use(oner.Input.actions["Bow"].IsPressed(), charged);
         chargingRoutine = oner.StartCoroutine(ChargingRoutine());
     }
@@ -225,15 +240,18 @@ public class BowState : PlayerState
         if (oner.Input.actions["Dash"].IsPressed())
         {
             // 차징 캔슬
+            oner.Bow.Cancel();
             oner.StopCoroutine(chargingRoutine);
             ChangeState(Player.State.Dash);
         }
-        else if (!oner.Input.actions["Bow"].IsPressed() && oner.Input.actions["Bow"].triggered)
+        else if (!oner.Input.actions["Bow"].IsPressed() && oner.Input.actions["Bow"].triggered && shotCount > 0)
         {
+            shotCount--;
+            oner.StartCoroutine(ShotRoutine());
+
             oner.Bow.Use(oner.Input.actions["Bow"].IsPressed(), charged);
             oner.StopCoroutine(chargingRoutine);
             oner.StartCoroutine(CoolDownRoutine());
-            ChangeState(Player.State.Normal);
         }
     }
 
@@ -252,6 +270,13 @@ public class BowState : PlayerState
         oner.Bow.CanShot = true;
     }
 
+    IEnumerator ShotRoutine()// 애니메이션 전용 코루틴
+    {
+        oner.Animator.Play("Sniping_Out");
+        yield return new WaitForSeconds(0.5f);
+        ChangeState(Player.State.Normal);
+    }
+
     public BowState(Player oner)
     {
         this.oner = oner;
@@ -265,6 +290,8 @@ public class DashState : PlayerState
 
     public override void Enter()
     {
+        oner.Animator.Play("Dash");
+
         isDash = true;
         oner.CanDash = false;
         oner.gameObject.layer = 22; // 22 = 무적레이어
