@@ -17,6 +17,13 @@ public class Player : MonoBehaviour, IDamagable
     PlayerInput input;
     public PlayerInput Input => input;
     [SerializeField] Inventory inventory;
+    [SerializeField]
+    Animator animator;
+    public Animator Animator => animator;
+
+    [Header("Render")]
+    [SerializeField] GameObject swordRender;
+    [SerializeField] GameObject bowRender;
 
     [Header("Move")]
     [SerializeField] float moveSpeed;
@@ -51,6 +58,27 @@ public class Player : MonoBehaviour, IDamagable
 
     bool canDash = true;
     public bool CanDash { get { return canDash; } set { canDash = value; } }
+    bool isDead;
+    bool isSword = true;
+    public bool IsSword
+    {
+        get { return isSword; }
+        set
+        {
+            isSword = value;
+            animator.SetBool("IsSword", value);
+            if (value)
+            {
+                swordRender.SetActive(true);
+                bowRender.SetActive(false);
+            }
+            else
+            {
+                swordRender.SetActive(false);
+                bowRender.SetActive(true);
+            }
+        }
+    }
 
     private void Start()
     {
@@ -60,28 +88,39 @@ public class Player : MonoBehaviour, IDamagable
         stateMachine.AddState(State.ThirdSword, new ThirdSwordState(this));
         stateMachine.AddState(State.Bow, new BowState(this));
         stateMachine.AddState(State.Dash, new DashState(this));
+
+        animator.SetBool("IsSword", isSword); // 초기 값 설정 처음은 검을 들고있는 상태
         stateMachine.Start(State.Normal);
     }
 
     private void Update()
     {
         curStateName = stateMachine.CurState;
+        if (isDead)
+            return;
+
         stateMachine.Update();
     }
 
     private void FixedUpdate()
     {
+        if (isDead)
+            return;
+
         stateMachine.FixedUpdate();
     }
 
     private void LateUpdate()
     {
+        if (isDead)
+            return;
+
         stateMachine.LateUpdate();
     }
 
     public void Move()
     {
-        rigid.velocity = new Vector3(moveDir.x, rigid.velocity.y, moveDir.z) * moveSpeed;
+        rigid.velocity = new Vector3(moveDir.x * moveSpeed, rigid.velocity.y, moveDir.z * moveSpeed);
     }
 
     public void Turn(bool isNormalState)
@@ -104,7 +143,7 @@ public class Player : MonoBehaviour, IDamagable
 
     public void Dash()
     {
-        rigid.velocity = new Vector3(dashDir.x, rigid.velocity.y, dashDir.z) * dashSpeed;
+        rigid.velocity = new Vector3(dashDir.x * dashSpeed, rigid.velocity.y, dashDir.z * dashSpeed);
     }
 
     private void OnMove(InputValue value)
@@ -151,7 +190,9 @@ public class Player : MonoBehaviour, IDamagable
 
         if (Manager.Game.PlayerData.Hp <= 0)
         {
-            Debug.Log("죽음");
+            isDead = true;
+            animator.Play("Death");
+            gameObject.layer = 22; // 22 = 무적 레이어
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Bow : Weapon
@@ -5,7 +6,6 @@ public class Bow : Weapon
     [Header("Bow")]
     [SerializeField] Transform arrowShotPoint;
     [SerializeField] LineRenderer lineRenderer;
-    [SerializeField] float lineRerderRange; // ¶óÀÎ·»´õ·¯ ±æÀÌ
     [SerializeField]
     float chargedTime; // Â÷Â¡ ½Ã°£
     public float ChargedTime => chargedTime;
@@ -29,6 +29,8 @@ public class Bow : Weapon
     public bool CanShot { get { return canShot; } set { canShot = value; } }
     bool isRayHit;
     RaycastHit hit;
+    Coroutine chagingRoutine;
+    float lineRenderRange;
 
     private void Start()
     {
@@ -46,7 +48,7 @@ public class Bow : Weapon
             }
             else
             {
-                lineRenderer.SetPosition(1, arrowShotPoint.position + arrowShotPoint.forward * lineRerderRange);
+                lineRenderer.SetPosition(1, arrowShotPoint.position + arrowShotPoint.forward * lineRenderRange);
             }
         }
         else
@@ -60,7 +62,7 @@ public class Bow : Weapon
     {
         if (lineRenderer.enabled)
         {
-            if (Physics.Raycast(arrowShotPoint.position, arrowShotPoint.forward, out hit, lineRerderRange, collisionLayer))
+            if (Physics.Raycast(arrowShotPoint.position, arrowShotPoint.forward, out hit, lineRenderRange, collisionLayer))
             {
                 isRayHit = true;
             }
@@ -82,10 +84,12 @@ public class Bow : Weapon
         if (onClick)
         {
             lineRenderer.enabled = true;
+            lineRenderRange = normalRange;
+            chagingRoutine = StartCoroutine(ChagingRoutine());
         }
         else
         {
-            lineRenderer.enabled = false;
+            Cancel();
 
             Arrow arrow =
                 Instantiate(arrowPrefab, arrowShotPoint.position, arrowShotPoint.rotation).GetComponent<Arrow>();
@@ -111,5 +115,24 @@ public class Bow : Weapon
                     break;
             }
         }
+    }
+
+    public void Cancel() // Â÷Â¡Áß¿¡ ´ë½Ã·Î Äµ½½ ½Ã
+    {
+        lineRenderer.enabled = false;
+        if (chagingRoutine != null)
+        {
+            StopCoroutine(chagingRoutine);
+            chagingRoutine = null;
+        }
+        lineRenderer.widthMultiplier = 1;
+        lineRenderRange = normalRange;
+    }
+
+    IEnumerator ChagingRoutine()
+    {
+        yield return new WaitForSeconds(chargedTime);
+        lineRenderer.widthMultiplier = 2;
+        lineRenderRange = chargedRange;
     }
 }

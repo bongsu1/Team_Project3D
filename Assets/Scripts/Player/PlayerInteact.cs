@@ -13,8 +13,15 @@ public class PlayerInteact : MonoBehaviour
         int size = Physics.OverlapSphereNonAlloc(interactPoint.position, interactRange, others, interactableLayer);
         if (size > 0)
         {
-            IInteractable interactable = others[0].GetComponent<IInteractable>();
-            interactable?.Interact(inventory);
+            for (int i = 0; i < size; i++)
+            {
+                IInteractable interactable = others[i].GetComponent<IInteractable>();
+                if (interactable != null)
+                {
+                    interactable.Interact(inventory);
+                    return;
+                }
+            }
         }
     }
 
