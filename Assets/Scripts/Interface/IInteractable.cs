@@ -1,4 +1,4 @@
 public interface IInteractable
 {
-    public void Interact(Inventory inventory);
+    public void Interact();
 }

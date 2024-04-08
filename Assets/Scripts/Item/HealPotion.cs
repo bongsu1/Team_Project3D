@@ -18,7 +18,7 @@ public class HealPotion : Item
 
     public override void ItemUse()
     {
-        if (!canUse || (Manager.Game.PlayerData.Hp == Manager.Game.PlayerData.MaxHp) || itemCount == 0)
+        if (!canUse || (Manager.Game.PlayerData.Hp == Manager.Game.PlayerData.MaxHp) || ItemCount == 0)
             return;
 
         healRoutine = StartCoroutine(HealRoutine());
@@ -29,7 +29,8 @@ public class HealPotion : Item
         canUse = false;
         yield return new WaitForSeconds(healDelay);
         Manager.Game.PlayerData.Hp += healValue;
-        itemCount--;
+        --ItemCount;
+        Debug.Log($"물약 갯수:{ItemCount}");
         Debug.Log($"물약 회복량 : {healValue}\n플레이어 체력 {Manager.Game.PlayerData.Hp}");
         yield return new WaitForSeconds(coolTime);
         canUse = true;
@@ -37,8 +38,12 @@ public class HealPotion : Item
 
     public void StopHealRoutine()
     {
-        StopCoroutine(healRoutine);
-        StartCoroutine(CancelRoutine());
+        if (healRoutine != null)
+        {
+            StopCoroutine(healRoutine);
+            StartCoroutine(CancelRoutine());
+            healRoutine = null;
+        }
     }
 
     IEnumerator CancelRoutine()
