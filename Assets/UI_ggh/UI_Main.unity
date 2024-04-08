@@ -1541,6 +1541,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+
 --- !u!1 &500323150
 GameObject:
   m_ObjectHideFlags: 0
