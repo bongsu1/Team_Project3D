@@ -234,7 +234,6 @@ GameObject:
   - component: {fileID: 3939436631775201985}
   - component: {fileID: 6692335671566486325}
   - component: {fileID: 2206829133001863984}
-  - component: {fileID: 6623993162208571908}
   - component: {fileID: 1975561680305597455}
   m_Layer: 12
   m_Name: Statue06_b
@@ -331,33 +330,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.86371446, y: 1.738687, z: 1.5341964}
   m_Center: {x: 0.0031063408, y: 0.8693433, z: -0.020675272}
---- !u!54 &6623993162208571908
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7079317823319225048}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
 --- !u!114 &1975561680305597455
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1064,14 +1064,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Statue06_c
       objectReference: {fileID: 0}
-    - target: {fileID: 662432052782157031, guid: 83d18f356bad85f4fab72b526c8b8d47, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2025406878035112768, guid: 83d18f356bad85f4fab72b526c8b8d47, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
