@@ -199,7 +199,7 @@ public class Player : MonoBehaviour, IDamagable
     public void TakeDamage(int damage)
     {
         Manager.Game.PlayerData.Hp -= damage;
-
+        Debug.Log($"플레이어가 받은 데미지 : {damage}");
         if (Manager.Game.PlayerData.Hp <= 0)
         {
             isDead = true;
