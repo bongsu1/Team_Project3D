@@ -7,7 +7,7 @@ public class Chest : MonoBehaviour, IInteractable
     [SerializeField] bool isKeyChest;
     private bool isOpen;
 
-    public void Interact(Inventory inventory)
+    public void Interact()
     {
         if (isOpen)
             return;
@@ -16,10 +16,10 @@ public class Chest : MonoBehaviour, IInteractable
         StartCoroutine(OpenRoutine(top.position));
 
         if (isKeyChest)
-            inventory.GetKeyItem(key);
+            Manager.Game.Inventory.GetKeyItem(key);
 
         int potion = Random.Range(0, 5);
-        inventory.FillHealpotion(potion);
+        Manager.Game.Inventory.FillHealpotion(potion);
     }
 
     // test

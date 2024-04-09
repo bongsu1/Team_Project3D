@@ -4,7 +4,6 @@ public class PlayerInteact : MonoBehaviour
 {
     [SerializeField] LayerMask interactableLayer;
     [SerializeField] Transform interactPoint;
-    [SerializeField] Inventory inventory;
     [SerializeField] float interactRange;
 
     Collider[] others = new Collider[20];
@@ -18,7 +17,7 @@ public class PlayerInteact : MonoBehaviour
                 IInteractable interactable = others[i].GetComponent<IInteractable>();
                 if (interactable != null)
                 {
-                    interactable.Interact(inventory);
+                    interactable.Interact();
                     return;
                 }
             }

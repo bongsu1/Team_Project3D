@@ -6,7 +6,7 @@ public class Player : MonoBehaviour, IDamagable
     public enum State { Normal, FirstSword, SecondSword, ThirdSword, Bow, Dash }
     private StateMachine<State> stateMachine = new StateMachine<State>();
 
-    [Header("Test")] // test 스테이트 확인용 빌드전 삭제 요망
+    [Header("State")] // test 스테이트 확인용 빌드전 삭제 요망
     [SerializeField] string curStateName;
 
     [Header("Component")]
@@ -16,7 +16,6 @@ public class Player : MonoBehaviour, IDamagable
     [SerializeField]
     PlayerInput input;
     public PlayerInput Input => input;
-    [SerializeField] Inventory inventory;
     [SerializeField]
     Animator animator;
     public Animator Animator => animator;
@@ -156,12 +155,11 @@ public class Player : MonoBehaviour, IDamagable
     private void OnPointer(InputValue value)
     {
         Pointer = value.Get<Vector2>();
-
     }
 
     private void OnItem1(InputValue value)
     {
-        inventory.ItmeUse();
+        Manager.Game.Inventory.ItmeUse();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -184,6 +182,20 @@ public class Player : MonoBehaviour, IDamagable
         }
     }
 
+    // test..
+    [Header("Test")]
+    public int testDamage;
+    public int fillCount;
+    [ContextMenu("Test Damage")]
+    public void TestDamage()
+    {
+        TakeDamage(testDamage);
+    }
+    [ContextMenu("Test Fill Potion")]
+    public void TestFillPotion()
+    {
+        Manager.Game.Inventory.FillHealpotion(fillCount);
+    }
     public void TakeDamage(int damage)
     {
         Manager.Game.PlayerData.Hp -= damage;
