@@ -64,6 +64,7 @@ public class GameSceneUI : BaseUI
 
     public void OnEscape()
     {
-        //Manager.UI.ShowPopUpUI(exitMenuUI);
+        // test..
+        Application.Quit();
     }
 }

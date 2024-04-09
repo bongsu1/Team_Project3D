@@ -101,7 +101,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2925010654403944565}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
@@ -337,7 +337,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7079317823319225048}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9d421dd68c86f44fb9adf5a34709583, type: 3}
   m_Name: 
@@ -349,8 +349,12 @@ MonoBehaviour:
   - {fileID: 1407008470831213198}
   - {fileID: 5905037896858480708}
   - {fileID: 412161887658090990}
-  moveDistance: 5
+  moveDistance: 10
   moveTime: 1
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 2101264
+  soptLight: {fileID: 8262390969272125351}
   isStatic: 0
 --- !u!1 &7374514146945515427
 GameObject:
