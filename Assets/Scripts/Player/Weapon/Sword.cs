@@ -14,6 +14,9 @@ public class Sword : Weapon
     float attackRate;
     public float AttackRate => attackRate; // 공격상태에 남아있는 시간 (attackDelay와 더해서 계산)
     [SerializeField]
+    float secondAttackDelay;
+    public float SecondAttackDelay => secondAttackDelay; // 두 번째 공격 부터 애니메이션 딜레이가 다름
+    [SerializeField]
     float thirdAttackRate; // 세번째 공격후 경직
     public float ThirdAttackRate => thirdAttackRate;
 
