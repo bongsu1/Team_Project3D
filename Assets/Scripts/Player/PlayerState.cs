@@ -149,8 +149,9 @@ public class SecondSwordState : PlayerState
 
     IEnumerator AttackRoutine()
     {
-        yield return new WaitForSeconds(oner.Sword.AttackDelay);
+        yield return new WaitForSeconds(oner.Sword.SecondAttackDelay);
         oner.Sword.Use(2);
+        yield return new WaitForSeconds(oner.Sword.AttackDelay - oner.Sword.SecondAttackDelay);
         canThirdAttack = true;
         yield return new WaitForSeconds(oner.Sword.AttackRate);
         isAttack = false;
@@ -197,7 +198,7 @@ public class ThirdSwordState : PlayerState
 
     IEnumerator AttackRoutine()
     {
-        yield return new WaitForSeconds(oner.Sword.AttackDelay);
+        yield return new WaitForSeconds(oner.Sword.SecondAttackDelay);
         oner.Sword.Use(3);
         yield return new WaitForSeconds(oner.Sword.ThirdAttackRate);
         isAttack = false;

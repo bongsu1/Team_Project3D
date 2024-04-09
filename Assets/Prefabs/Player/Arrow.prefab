@@ -383,6 +383,6 @@ MonoBehaviour:
     m_Bits: 64
   wallLayer:
     serializedVersion: 2
-    m_Bits: 2097152
+    m_Bits: 2101248
   rigid: {fileID: 5830898078752150087}
   bouncedDamage: 0
