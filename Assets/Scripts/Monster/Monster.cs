@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public class Monster : MonoBehaviour, IDamagable
 {
@@ -12,11 +13,7 @@ public class Monster : MonoBehaviour, IDamagable
 
     [Header("Test")]
     [SerializeField] string curState;
-    /*[Header("Atrribute")]
-    [SerializeField] int id;
-    [SerializeField] string name;
-    [SerializeField] Vector3 position;
-    [SerializeField] Vector3 rotation;*/
+
     [Header("Spec")]
     [SerializeField] int hp;
     [SerializeField] int damage;
@@ -47,6 +44,8 @@ public class Monster : MonoBehaviour, IDamagable
     [SerializeField] Color hurtColor;
     [SerializeField] bool canKnockback;
 
+    public UnityAction OnDead; // 죽었을 때 씬에 전달
+
     protected Transform target; // 플레이어 위치
     protected bool isCamp = true;
     protected bool onAttack;
@@ -61,6 +60,7 @@ public class Monster : MonoBehaviour, IDamagable
     public float SearchDistance { get { return searchDistance; } set { searchDistance = value; } }
     public float AttackDistance => attackDistance;
     public bool IsCamp => isCamp;
+    public bool IsDead => isDead;
 
     private void Awake()
     {
@@ -101,7 +101,7 @@ public class Monster : MonoBehaviour, IDamagable
         if (searchRange.enabled)
         {
             Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(searchRange.transform.position, searchDistance);
+            Gizmos.DrawWireSphere(searchRange.transform.position, searchDistance * transform.localScale.x);
         }
         else
         {
@@ -203,6 +203,7 @@ public class Monster : MonoBehaviour, IDamagable
             hp = 0;
             isDead = true;
             nav.enabled = false;
+            OnDead?.Invoke();
             switch (type)
             {
                 case Type.Slime:

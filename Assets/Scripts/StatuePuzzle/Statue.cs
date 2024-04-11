@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Statue : MonoBehaviour, IDamagable
 {
@@ -12,20 +13,31 @@ public class Statue : MonoBehaviour, IDamagable
     [SerializeField] Transform[] hitPoint;
     [SerializeField] float moveDistance;
     [SerializeField] float moveTime;
+    [SerializeField] LayerMask wallLayer;
+
+    [Header("Component")]
+    [SerializeField] Light soptLight;
+
+    public UnityAction<bool> OnInsert; // 게임씬에 맞춰 졌다고 전달
 
     bool isInsert;
-    public bool IsInsert { get { return isInsert; } set { isInsert = value; } }
+    public bool IsInsert { get { return isInsert; } set { isInsert = value; OnInsert?.Invoke(value); } }
     Coroutine moveRoutine;
 
     private void OnEnable()
     {
+        soptLight.enabled = true;
         player = FindObjectOfType<Player>().transform;
+        gameObject.layer = 12;
     }
 
     // test..
     public bool isStatic;
     public void TakeDamage(int damage)
     {
+        if (!enabled)
+            return;
+
         if (isStatic)
         {
             if (isInsert)
@@ -48,8 +60,20 @@ public class Statue : MonoBehaviour, IDamagable
         moveRoutine = StartCoroutine(MoveRoutine((transform.position - hitPoint[index].position).normalized));
     }
 
+    Vector3 nextVec;
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(transform.position + Vector3.up * 2f, transform.position + nextVec * moveDistance + Vector3.up * 2f);
+    }
+
     IEnumerator MoveRoutine(Vector3 moveDir)
     {
+        nextVec = moveDir;
+        if (Physics.Raycast(transform.position + Vector3.up * 2f, moveDir, moveDistance, wallLayer))
+        {
+            moveDir = Vector3.zero;
+        }
         Vector3 curPoint = transform.position;
         Vector3 nextPoint = transform.position + moveDir * moveDistance;
         float time = 0;

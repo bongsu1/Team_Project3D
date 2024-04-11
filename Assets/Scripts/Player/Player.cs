@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -126,6 +127,10 @@ public class Player : MonoBehaviour, IDamagable
     {
         if (isNormalState)
         {
+            if (-transform.forward == moveDir)
+            {
+                transform.forward = Vector3.Lerp(transform.right, moveDir, turnSpeed * 0.5f);
+            }
             transform.forward = Vector3.Lerp(transform.forward, moveDir, turnSpeed);
         }
         else
@@ -205,6 +210,18 @@ public class Player : MonoBehaviour, IDamagable
             isDead = true;
             animator.Play("Death");
             gameObject.layer = 22; // 22 = 무적 레이어
+
+            // test..
+            StartCoroutine(DeatRoutine());
         }
+    }
+
+    // test..
+    [Header("Death Test")]
+    [SerializeField] PopUpUI DeathUI;
+    IEnumerator DeatRoutine()
+    {
+        yield return new WaitForSeconds(5f);
+        Manager.UI.ShowPopUpUI(DeathUI);
     }
 }

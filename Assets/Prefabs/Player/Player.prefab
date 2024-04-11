@@ -285,9 +285,9 @@ Transform:
   m_GameObject: {fileID: 383926179536261219}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.8, z: 0.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0.8, z: 0.8}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 5938080145307229116}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -308,7 +308,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -976,8 +976,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6724337082759799665}
   - {fileID: 8527363027346500898}
@@ -1096,6 +1096,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   testDamage: 0
+  fillCount: 0
+  DeathUI: {fileID: 1777199901403389639, guid: 54f301cc2a9fdb64cb40872de63c002e, type: 3}
 --- !u!114 &5969955991907566981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1112,7 +1114,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   interactPoint: {fileID: 2163830091708860826}
-  interactRange: 0.5
+  interactRange: 1.5
 --- !u!1 &3098500736329691187
 GameObject:
   m_ObjectHideFlags: 0
@@ -1502,10 +1504,11 @@ MonoBehaviour:
   attackArea: {fileID: 3951306171042249462}
   monsterLayer:
     serializedVersion: 2
-    m_Bits: 64
-  firstDamage: 1
-  thirdDamage: 3
+    m_Bits: 4160
+  firstDamage: 10
+  thirdDamage: 30
   attackRate: 0.3
+  secondAttackDelay: 0.2
   thirdAttackRate: 1.5
 --- !u!54 &6290551325968641524
 Rigidbody:
@@ -2162,7 +2165,7 @@ Transform:
   m_GameObject: {fileID: 4488556750547195719}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0.5}
+  m_LocalPosition: {x: 0, y: 0.66, z: 0.58}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

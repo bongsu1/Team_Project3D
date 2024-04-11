@@ -39,7 +39,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 961235469510268659}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
@@ -271,20 +271,24 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2173096812387596787}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9d421dd68c86f44fb9adf5a34709583, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statueNumber: 0
+  statueNumber: 2
   player: {fileID: 0}
   hitPoint:
   - {fileID: 6729183815236713525}
   - {fileID: 8332227225221255830}
   - {fileID: 6322198615877172262}
   - {fileID: 73357768998101130}
-  moveDistance: 5
+  moveDistance: 10
   moveTime: 1
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 18878480
+  soptLight: {fileID: 4424323533307944542}
   isStatic: 0
 --- !u!1 &2341048086593710250
 GameObject:

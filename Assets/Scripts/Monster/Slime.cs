@@ -14,7 +14,7 @@ public class Slime : Monster
             time += Time.deltaTime / attackDelay;
             yield return null;
         }
-        rigid.velocity = transform.forward * attackSpeed + Vector3.up * 3f;
+        rigid.velocity = transform.forward * attackSpeed + Vector3.up * 4f;
         animator.SetTrigger("DoAttack");
         yield return new WaitForSeconds(0.7f);
         rigid.velocity = Vector3.zero;

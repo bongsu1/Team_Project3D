@@ -152,7 +152,7 @@ MonoBehaviour:
   moveSpeed: 1
   searchLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 4194312
   searchDistance: 10
   patrolPoint: []
   baseCampLayer:
