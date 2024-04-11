@@ -1097,6 +1097,7 @@ MonoBehaviour:
     m_Bits: 64
   testDamage: 0
   fillCount: 0
+  DeathUI: {fileID: 1777199901403389639, guid: 54f301cc2a9fdb64cb40872de63c002e, type: 3}
 --- !u!114 &5969955991907566981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1113,7 +1114,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   interactPoint: {fileID: 2163830091708860826}
-  interactRange: 0.5
+  interactRange: 1.5
 --- !u!1 &3098500736329691187
 GameObject:
   m_ObjectHideFlags: 0
@@ -2164,7 +2165,7 @@ Transform:
   m_GameObject: {fileID: 4488556750547195719}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0.5}
+  m_LocalPosition: {x: 0, y: 0.66, z: 0.58}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
