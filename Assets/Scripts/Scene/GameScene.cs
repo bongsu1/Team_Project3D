@@ -51,7 +51,7 @@ public class GameScene : BaseScene
         {
             if (statues.Length == 0) // 몬스터를 다 제거 후 석상이 없으면 클리어
             {
-                StartCoroutine(ClearRoutine());
+                // 클리어 후 다음씬 버튼 활성화
                 return;
             }
 
@@ -69,19 +69,12 @@ public class GameScene : BaseScene
             insertStatueCount++;
             if (insertStatueCount == statues.Length)
             {
-                Debug.Log("퍼즐 클리어");
-                //StartCoroutine(ClearRoutine());
+                // 클리어 후 다음씬 버튼 활성화
             }
         }
         else
         {
             insertStatueCount--;
         }
-    }
-
-    IEnumerator ClearRoutine()
-    {
-        yield return new WaitForSeconds(2f);
-        Manager.UI.ShowPopUpUI(clearUI);
     }
 }

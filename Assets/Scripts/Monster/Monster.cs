@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -44,13 +45,18 @@ public class Monster : MonoBehaviour, IDamagable
     [SerializeField] Color hurtColor;
     [SerializeField] bool canKnockback;
 
+    [Header("HP Bar")]
+    [SerializeField] HPBar hpBar;
+
     public UnityAction OnDead; // 죽었을 때 씬에 전달
+    public UnityAction<float> OnChangeHP; // 체력바
 
     protected Transform target; // 플레이어 위치
     protected bool isCamp = true;
     protected bool onAttack;
     public bool OnAttack => onAttack;
     private bool isDead;
+    private int maxHp;
 
     // property..
     public NavMeshAgent Nav => nav;
@@ -75,6 +81,8 @@ public class Monster : MonoBehaviour, IDamagable
 
     protected virtual void Start()
     {
+        maxHp = hp;
+
         stateMachine.AddState(State.Normal, new M_NoramlState(this));
         stateMachine.AddState(State.Trace, new M_TraceState(this));
         stateMachine.AddState(State.Attack, new M_AttackState(this));
@@ -188,9 +196,29 @@ public class Monster : MonoBehaviour, IDamagable
         yield return null;
     }
 
+    // test..
+    [Header("HP Bar Test")]
+    public bool ishpBarInvisibleMode; // 맞고 시간이 지나면 체력 바가 사라지는 모드
     public virtual void TakeDamage(int damage)
     {
+        if (hpBar == null)
+        {
+            GameObject hpBarUI = Instantiate(Manager.Resource.Load<HPBar>("UI/MonsterUI").gameObject, transform);
+            hpBar = hpBarUI.GetComponent<HPBar>();
+            hpBar.Monster = this;
+        }
+        if (ishpBarInvisibleMode)
+        {
+            if (hpBarInvisibleRoutine != null)
+            {
+                StopCoroutine(hpBarInvisibleRoutine);
+                hpBarInvisibleRoutine = null;
+            }
+            hpBarInvisibleRoutine = StartCoroutine(HPBarInvisibleRoutine(hpBar.gameObject));
+        }
+
         hp -= damage;
+        OnChangeHP?.Invoke((float)hp / maxHp);
         Debug.Log($"몬스터가 받은 데미지 : {damage}");
         if (canKnockback)
         {
@@ -253,5 +281,12 @@ public class Monster : MonoBehaviour, IDamagable
         }
     }
 
+    Coroutine hpBarInvisibleRoutine;
+    IEnumerator HPBarInvisibleRoutine(GameObject hpBar)
+    {
+        hpBar.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        hpBar.SetActive(false);
+    }
     #endregion
 }

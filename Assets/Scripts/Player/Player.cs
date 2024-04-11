@@ -225,8 +225,7 @@ public class Player : MonoBehaviour, IDamagable
     {
         if (isReStart)
         {
-            string curSceneName = Manager.Scene.GetCurScene().name;
-            Manager.Scene.LoadScene(curSceneName);
+            Manager.Scene.LoadScene(Manager.Scene.GetCurScene().name);
         }
         else
         {
