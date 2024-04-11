@@ -28,12 +28,16 @@ public class Statue : MonoBehaviour, IDamagable
     {
         soptLight.enabled = true;
         player = FindObjectOfType<Player>().transform;
+        gameObject.layer = 12;
     }
 
     // test..
     public bool isStatic;
     public void TakeDamage(int damage)
     {
+        if (!enabled)
+            return;
+
         if (isStatic)
         {
             if (isInsert)

@@ -353,7 +353,7 @@ MonoBehaviour:
   moveTime: 1
   wallLayer:
     serializedVersion: 2
-    m_Bits: 2101264
+    m_Bits: 18878480
   soptLight: {fileID: 8262390969272125351}
   isStatic: 0
 --- !u!1 &7374514146945515427
