@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.LookDev;
 
 public class Player : MonoBehaviour, IDamagable
 {
@@ -49,6 +51,10 @@ public class Player : MonoBehaviour, IDamagable
 
     [Header("Collision")]
     [SerializeField] LayerMask monsterLayer;
+
+    [Header("Die")]
+    [SerializeField] Transform spawnPoint;
+    public UnityEvent OnDead;
 
     Vector3 moveDir;
     public Vector3 MoveDir => moveDir;
@@ -209,19 +215,29 @@ public class Player : MonoBehaviour, IDamagable
         {
             isDead = true;
             animator.Play("Death");
-            gameObject.layer = 22; // 22 = 무적 레이어
-
-            // test..
-            StartCoroutine(DeatRoutine());
+            gameObject.layer = 14; // 14 = 죽은 플레이어
+            OnDead?.Invoke();
         }
     }
 
-    // test..
-    [Header("Death Test")]
-    [SerializeField] PopUpUI DeathUI;
-    IEnumerator DeatRoutine()
+    public bool isReStart;
+    public void ReSpawn()
     {
-        yield return new WaitForSeconds(5f);
-        Manager.UI.ShowPopUpUI(DeathUI);
+        if (isReStart)
+        {
+            Manager.Scene.LoadScene(Manager.Scene.GetCurScene().name);
+        }
+        else
+        {
+            transform.position = spawnPoint.position;
+            gameObject.SetActive(false);
+            gameObject.SetActive(true);
+            isDead = false;
+            gameObject.layer = 3;
+
+            // 캐릭터 초기화
+            Manager.Game.PlayerData.Hp = Manager.Game.PlayerData.MaxHp;
+            Manager.Game.Inventory.InventoryItem[0].ItemCount = Manager.Game.Inventory.InventoryItem[0].MaxItemCount;
+        }
     }
 }

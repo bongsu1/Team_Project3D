@@ -32,7 +32,6 @@ public class Arrow : MonoBehaviour
         {
             IDamagable monster = other.GetComponent<IDamagable>();
             monster?.TakeDamage(damage);
-            Destroy(gameObject);
         }
     }
 
