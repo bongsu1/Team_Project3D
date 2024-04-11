@@ -5,6 +5,8 @@ public class TitleScene : BaseScene
 {
     [SerializeField] GameObject settingUI;
 
+    private bool doLoading;
+
     public override IEnumerator LoadingRoutine()
     {
         yield return null;
@@ -12,6 +14,10 @@ public class TitleScene : BaseScene
 
     public void GameStart()
     {
+        if (doLoading)
+            return;
+
+        doLoading = true;
         Manager.Scene.LoadScene("FirstStageScene");
     }
 

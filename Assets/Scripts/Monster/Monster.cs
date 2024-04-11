@@ -198,7 +198,7 @@ public class Monster : MonoBehaviour, IDamagable
 
     // test..
     [Header("HP Bar Test")]
-    public bool ishpBarInvisibleMode; // 맞고 시간이 지나면 체력 바가 사라지는 모드
+    public bool hpBarInvisibleMode; // 맞고 시간이 지나면 체력 바가 사라지는 모드
     public virtual void TakeDamage(int damage)
     {
         if (hpBar == null)
@@ -207,7 +207,7 @@ public class Monster : MonoBehaviour, IDamagable
             hpBar = hpBarUI.GetComponent<HPBar>();
             hpBar.Monster = this;
         }
-        if (ishpBarInvisibleMode)
+        if (hpBarInvisibleMode)
         {
             if (hpBarInvisibleRoutine != null)
             {
