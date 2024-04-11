@@ -17,6 +17,10 @@ public class GameScene : BaseScene
     public override IEnumerator LoadingRoutine()
     {
         // 몬스터 스폰 로직 같은 씬로딩때 미리 해야될것들
+
+        // 캐릭터 초기화
+        Manager.Game.PlayerData.Hp = Manager.Game.PlayerData.MaxHp;
+        Manager.Game.Inventory.InventoryItem[0].ItemCount = Manager.Game.Inventory.InventoryItem[0].MaxItemCount;
         yield return null;
     }
 
@@ -28,8 +32,8 @@ public class GameScene : BaseScene
             statues[i].OnInsert += PuzzleClear;
         }
         monsters = FindObjectsOfType<Monster>();
-        monsterCount = monsters.Length;
-        if (monsterCount == 0)
+        monsterCount = monsters.Length; // 이 맵에 있는 몬스터 수
+        if (monsterCount == 0) // 몬스터가 없으면 퍼즐 시작
         {
             monsterCount++;
             PuzzleStart();
@@ -45,10 +49,15 @@ public class GameScene : BaseScene
         monsterCount--;
         if (monsterCount == 0)
         {
+            if (statues.Length == 0) // 몬스터를 다 제거 후 석상이 없으면 클리어
+            {
+                StartCoroutine(ClearRoutine());
+                return;
+            }
+
             for (int i = 0; i < statues.Length; i++)
             {
                 statues[i].enabled = true;
-                Debug.Log("몬스터를 다 죽임 퍼즐 시작");
             }
         }
     }
@@ -61,7 +70,7 @@ public class GameScene : BaseScene
             if (insertStatueCount == statues.Length)
             {
                 Debug.Log("퍼즐 클리어");
-                StartCoroutine(ClearRoutine());
+                //StartCoroutine(ClearRoutine());
             }
         }
         else

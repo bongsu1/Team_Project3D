@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +15,9 @@ public class GameSceneUI : BaseUI
     [Header("ExitMenu UI")]
     [SerializeField] ExitMenuUI exitMenuUI;
 
+    [Header("Player Dead")]
+    [SerializeField] GameObject deadUI;
+
     protected override void Awake()
     {
         base.Awake();
@@ -21,7 +25,7 @@ public class GameSceneUI : BaseUI
 
     private void OnEnable()
     {
-        exitMenuUI = Manager.Resource.Load<ExitMenuUI>("End(2)");
+        exitMenuUI = Manager.Resource.Load<ExitMenuUI>("UI/End(2)");
         Manager.Game.PlayerData.OnChangeHp += ChangeHPBar;
         Manager.Game.Inventory.InventoryItem[0].OnChangeItemCount += ChangePotionCount;
     }
@@ -62,9 +66,19 @@ public class GameSceneUI : BaseUI
         }
     }
 
+    public void ShowDeadUI()
+    {
+        StartCoroutine(ShowDeadUIRoutine());
+    }
+
+    IEnumerator ShowDeadUIRoutine()
+    {
+        yield return new WaitForSeconds(2f);
+        deadUI.SetActive(true);
+    }
+
     public void OnEscape()
     {
-        // test..
-        Application.Quit();
+        Manager.UI.ShowPopUpUI(exitMenuUI);
     }
 }
