@@ -20,6 +20,8 @@ public class Sword : Weapon
     float thirdAttackRate; // 세번째 공격후 경직
     public float ThirdAttackRate => thirdAttackRate;
 
+    [SerializeField] HitEffect hitEffect;
+
     bool isNormalAttack;
 
     /// <summary>
@@ -62,6 +64,7 @@ public class Sword : Weapon
         {
             IDamagable monster = other.GetComponent<IDamagable>();
             monster?.TakeDamage(isNormalAttack ? firstDamage : thirdDamage);
+            hitEffect.PlayHitEffect(other.ClosestPoint(other.transform.position));
         }
     }
 }

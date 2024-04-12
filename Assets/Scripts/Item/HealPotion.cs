@@ -16,12 +16,13 @@ public class HealPotion : Item
         canUse = true;
     }
 
-    public override void ItemUse()
+    public override bool ItemUse()
     {
         if (!canUse || (Manager.Game.PlayerData.Hp == Manager.Game.PlayerData.MaxHp) || ItemCount == 0)
-            return;
+            return false;
 
         healRoutine = StartCoroutine(HealRoutine());
+        return true;
     }
 
     IEnumerator HealRoutine()

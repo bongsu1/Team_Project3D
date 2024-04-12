@@ -11,11 +11,11 @@ public class Inventory : MonoBehaviour
     public Item[] InventoryItem => inventoryItem;
 
     /// <summary>
-    /// 물약사용
+    /// 물약사용 사용가능하면 true
     /// </summary>
-    public void ItmeUse()
+    public bool ItmeUse()
     {
-        inventoryItem[0].ItemUse();
+        return inventoryItem[0].ItemUse();
     }
 
     /// <summary>
