@@ -1,8 +1,6 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering.LookDev;
 
 public class Player : MonoBehaviour, IDamagable
 {
@@ -48,6 +46,10 @@ public class Player : MonoBehaviour, IDamagable
     [SerializeField]
     float dashCoolTime;
     public float DashCoolTime => dashCoolTime;
+
+    [Header("Effect")]
+    [SerializeField] PlayerEffect effect;
+    public PlayerEffect Effect => effect;
 
     [Header("Collision")]
     [SerializeField] LayerMask monsterLayer;
@@ -170,7 +172,10 @@ public class Player : MonoBehaviour, IDamagable
 
     private void OnItem1(InputValue value)
     {
-        Manager.Game.Inventory.ItmeUse();
+        if (Manager.Game.Inventory.ItmeUse())
+        {
+            effect.PlayEffect(PlayerEffect.E_Type.UseHealPotion);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -220,10 +225,10 @@ public class Player : MonoBehaviour, IDamagable
         }
     }
 
-    public bool isReStart;
+    public bool ReStartMode;
     public void ReSpawn()
     {
-        if (isReStart)
+        if (ReStartMode)
         {
             Manager.Scene.LoadScene(Manager.Scene.GetCurScene().name);
         }
@@ -232,6 +237,7 @@ public class Player : MonoBehaviour, IDamagable
             transform.position = spawnPoint.position;
             gameObject.SetActive(false);
             gameObject.SetActive(true);
+            effect.PlayEffect(PlayerEffect.E_Type.Respawn);
             isDead = false;
             gameObject.layer = 3;
 

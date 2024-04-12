@@ -117,7 +117,7 @@ public class Bow : Weapon
         }
     }
 
-    public void Cancel() // Â÷Â¡Áß¿¡ ´ë½Ã·Î Äµ½½ ½Ã
+    public void Cancel()
     {
         lineRenderer.enabled = false;
         if (chagingRoutine != null)

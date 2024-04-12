@@ -6,6 +6,7 @@ public class Arrow : MonoBehaviour
     [SerializeField] LayerMask wallLayer;
     [SerializeField] Rigidbody rigid;
     [SerializeField] int bouncedDamage;
+    [SerializeField] HitEffect HitEffect;
 
     int damage;
     public int Damage { set { damage = value; } }
@@ -32,6 +33,7 @@ public class Arrow : MonoBehaviour
         {
             IDamagable monster = other.GetComponent<IDamagable>();
             monster?.TakeDamage(damage);
+            HitEffect.PlayHitEffect(other.ClosestPoint(other.transform.position));
         }
     }
 

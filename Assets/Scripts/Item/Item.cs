@@ -21,8 +21,8 @@ public class Item : MonoBehaviour
         }
     }
 
-    public virtual void ItemUse()
+    public virtual bool ItemUse()
     {
-
+        return true;
     }
 }

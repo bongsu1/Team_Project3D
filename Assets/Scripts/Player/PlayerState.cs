@@ -95,6 +95,7 @@ public class FirstSwordState : PlayerState
     {
         yield return new WaitForSeconds(oner.Sword.AttackDelay);
         oner.Sword.Use(1);
+        oner.Effect.PlayEffect(PlayerEffect.E_Type.FirstAttack);
         canSecondAttack = true;
         yield return new WaitForSeconds(oner.Sword.AttackRate);
         isAttack = false;
@@ -151,6 +152,7 @@ public class SecondSwordState : PlayerState
     {
         yield return new WaitForSeconds(oner.Sword.SecondAttackDelay);
         oner.Sword.Use(2);
+        oner.Effect.PlayEffect(PlayerEffect.E_Type.SecondAttack);
         yield return new WaitForSeconds(oner.Sword.AttackDelay - oner.Sword.SecondAttackDelay);
         canThirdAttack = true;
         yield return new WaitForSeconds(oner.Sword.AttackRate);
@@ -200,6 +202,7 @@ public class ThirdSwordState : PlayerState
     {
         yield return new WaitForSeconds(oner.Sword.SecondAttackDelay);
         oner.Sword.Use(3);
+        oner.Effect.PlayEffect(PlayerEffect.E_Type.ThirdAttack);
         yield return new WaitForSeconds(oner.Sword.ThirdAttackRate);
         isAttack = false;
     }
@@ -243,14 +246,21 @@ public class BowState : PlayerState
             // Â÷Â¡ Äµ½½
             oner.Bow.Cancel();
             oner.StopCoroutine(chargingRoutine);
+            oner.Effect.StopChargeEffect();
             ChangeState(Player.State.Dash);
         }
         else if (!oner.Input.actions["Bow"].IsPressed() && oner.Input.actions["Bow"].triggered && shotCount > 0)
         {
             shotCount--;
             oner.StartCoroutine(ShotRoutine());
+            oner.Effect.StopChargeEffect();
 
             oner.Bow.Use(oner.Input.actions["Bow"].IsPressed(), charged);
+            if (charged == 1)
+                oner.Effect.PlayEffect(PlayerEffect.E_Type.ChargedShot);
+            else if (charged == 2)
+                oner.Effect.PlayEffect(PlayerEffect.E_Type.FullChargeShot);
+
             oner.StopCoroutine(chargingRoutine);
             oner.StartCoroutine(CoolDownRoutine());
         }
@@ -260,8 +270,10 @@ public class BowState : PlayerState
     {
         yield return new WaitForSeconds(oner.Bow.ChargedTime);
         charged++;
+        oner.Effect.PlayEffect(PlayerEffect.E_Type.ChargedBow);
         yield return new WaitForSeconds(oner.Bow.ChargedTime);
         charged++;
+        oner.Effect.FullChargeEffect();
     }
 
     IEnumerator CoolDownRoutine()
@@ -306,6 +318,7 @@ public class DashState : PlayerState
             oner.DashDir = oner.transform.forward;
         }
         oner.StartCoroutine(DashRoutine());
+        oner.Effect.PlayEffect(PlayerEffect.E_Type.Dash);
     }
 
     public override void FixedUpdate()
