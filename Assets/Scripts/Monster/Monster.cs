@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -55,7 +54,7 @@ public class Monster : MonoBehaviour, IDamagable
     protected bool isCamp = true;
     protected bool onAttack;
     public bool OnAttack => onAttack;
-    private bool isDead;
+    protected bool isDead;
     private int maxHp;
 
     // property..
