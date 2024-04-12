@@ -10,19 +10,22 @@ public class Sword : Weapon
     [Header("Attack")]
     [SerializeField] int firstDamage; // 첫번째와 두번째는 데미지가 같음
     [SerializeField] int thirdDamage;
-    [SerializeField]
-    float attackRate;
+    [SerializeField] float attackRate;
     public float AttackRate => attackRate; // 공격상태에 남아있는 시간 (attackDelay와 더해서 계산)
-    [SerializeField]
-    float secondAttackDelay;
+    [SerializeField] float secondAttackDelay;
     public float SecondAttackDelay => secondAttackDelay; // 두 번째 공격 부터 애니메이션 딜레이가 다름
-    [SerializeField]
-    float thirdAttackRate; // 세번째 공격후 경직
+    [SerializeField] float thirdAttackRate; // 세번째 공격후 경직
     public float ThirdAttackRate => thirdAttackRate;
 
+    [Header("Effect")]
     [SerializeField] HitEffect hitEffect;
 
     bool isNormalAttack;
+
+    private void OnEnable()
+    {
+        hitEffect = Instantiate(Manager.Resource.Load<HitEffect>("Effect/HitEffect"), transform);
+    }
 
     /// <summary>
     /// sequence에 몇번째 공격인지 입력 

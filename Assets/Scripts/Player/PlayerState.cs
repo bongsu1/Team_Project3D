@@ -96,6 +96,7 @@ public class FirstSwordState : PlayerState
         yield return new WaitForSeconds(oner.Sword.AttackDelay);
         oner.Sword.Use(1);
         oner.Effect.PlayEffect(PlayerEffect.E_Type.FirstAttack);
+        oner.Sound.PlaySound(PlayerSound.S_Type.FirstAttack);
         canSecondAttack = true;
         yield return new WaitForSeconds(oner.Sword.AttackRate);
         isAttack = false;
@@ -153,6 +154,7 @@ public class SecondSwordState : PlayerState
         yield return new WaitForSeconds(oner.Sword.SecondAttackDelay);
         oner.Sword.Use(2);
         oner.Effect.PlayEffect(PlayerEffect.E_Type.SecondAttack);
+        oner.Sound.PlaySound(PlayerSound.S_Type.FirstAttack);
         yield return new WaitForSeconds(oner.Sword.AttackDelay - oner.Sword.SecondAttackDelay);
         canThirdAttack = true;
         yield return new WaitForSeconds(oner.Sword.AttackRate);
@@ -203,6 +205,7 @@ public class ThirdSwordState : PlayerState
         yield return new WaitForSeconds(oner.Sword.SecondAttackDelay);
         oner.Sword.Use(3);
         oner.Effect.PlayEffect(PlayerEffect.E_Type.ThirdAttack);
+        oner.Sound.PlaySound(PlayerSound.S_Type.ThirdAttack);
         yield return new WaitForSeconds(oner.Sword.ThirdAttackRate);
         isAttack = false;
     }
@@ -224,6 +227,7 @@ public class BowState : PlayerState
         shotCount = 1;
         oner.IsSword = false;
         oner.Animator.Play("Sniping_In");
+        oner.Sound.PlaySound(PlayerSound.S_Type.Bowstring);
 
         oner.Bow.Use(oner.Input.actions["Bow"].IsPressed(), charged);
         chargingRoutine = oner.StartCoroutine(ChargingRoutine());
@@ -245,6 +249,7 @@ public class BowState : PlayerState
         {
             // Â÷Â¡ Äµ½½
             oner.Bow.Cancel();
+            Manager.Sound.StopSFX();
             oner.StopCoroutine(chargingRoutine);
             oner.Effect.StopChargeEffect();
             ChangeState(Player.State.Dash);
@@ -260,6 +265,8 @@ public class BowState : PlayerState
                 oner.Effect.PlayEffect(PlayerEffect.E_Type.ChargedShot);
             else if (charged == 2)
                 oner.Effect.PlayEffect(PlayerEffect.E_Type.FullChargeShot);
+            Manager.Sound.StopSFX();
+            oner.Sound.PlaySound(PlayerSound.S_Type.ArrowShot);
 
             oner.StopCoroutine(chargingRoutine);
             oner.StartCoroutine(CoolDownRoutine());
@@ -319,6 +326,7 @@ public class DashState : PlayerState
         }
         oner.StartCoroutine(DashRoutine());
         oner.Effect.PlayEffect(PlayerEffect.E_Type.Dash);
+        oner.Sound.PlaySound(PlayerSound.S_Type.Dash);
     }
 
     public override void FixedUpdate()

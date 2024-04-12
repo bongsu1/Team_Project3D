@@ -6,7 +6,7 @@ public class Arrow : MonoBehaviour
     [SerializeField] LayerMask wallLayer;
     [SerializeField] Rigidbody rigid;
     [SerializeField] int bouncedDamage;
-    [SerializeField] HitEffect HitEffect;
+    [SerializeField] HitEffect hitEffect;
 
     int damage;
     public int Damage { set { damage = value; } }
@@ -16,6 +16,11 @@ public class Arrow : MonoBehaviour
     public float ArrowSpeed { set { arrowSpeed = value; } }
     float arrowRange;
     public float ArrowRange { set { arrowRange = value; } }
+
+    private void OnEnable()
+    {
+        hitEffect = Instantiate(Manager.Resource.Load<HitEffect>("Effect/HitEffect"), transform);
+    }
 
     private void Start()
     {
@@ -33,7 +38,7 @@ public class Arrow : MonoBehaviour
         {
             IDamagable monster = other.GetComponent<IDamagable>();
             monster?.TakeDamage(damage);
-            HitEffect.PlayHitEffect(other.ClosestPoint(other.transform.position));
+            hitEffect.PlayHitEffect(other.ClosestPoint(other.transform.position));
         }
     }
 
