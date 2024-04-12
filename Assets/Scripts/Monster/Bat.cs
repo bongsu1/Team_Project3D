@@ -25,6 +25,7 @@ public class Bat : Monster
         }
 
         rigid.velocity = transform.forward * attackSpeed;
+        animator.SetTrigger("DoAttack");
         yield return new WaitForSeconds(0.5f);
         rigid.velocity = Vector3.zero;
         time = 0;

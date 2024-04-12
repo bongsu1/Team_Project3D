@@ -8,12 +8,6 @@ public class Mage : Monster
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] GameObject castBox; // 캐스팅하면서 보일 것
 
-    protected override void Start()
-    {
-        base.Start();
-        animator.Play("Spawn");
-    }
-
     Coroutine attackRoutine;
     public override void Attack()
     {
@@ -48,6 +42,10 @@ public class Mage : Monster
     public override void TakeDamage(int damage)
     {
         base.TakeDamage(damage);
-        //StopCoroutine(attackRoutine);
+        if (isDead)
+        {
+            StopCoroutine(attackRoutine);
+            castBox.SetActive(false);
+        }
     }
 }

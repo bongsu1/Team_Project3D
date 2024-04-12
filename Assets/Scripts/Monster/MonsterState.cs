@@ -9,17 +9,6 @@ public class M_NoramlState : MonsterState
 {
     public override void Enter()
     {
-        switch (oner.type)
-        {
-            case Monster.Type.Slime:
-                break;
-            case Monster.Type.Bat:
-                break;
-            case Monster.Type.Mummy:
-                break;
-            case Monster.Type.Mage:
-                break;
-        }
         oner.Nav.enabled = true;
         oner.Rigid.useGravity = false;
     }
@@ -46,19 +35,8 @@ public class M_TraceState : MonsterState
 {
     public override void Enter()
     {
-        switch (oner.type)
-        {
-            case Monster.Type.Slime:
-                oner.Animator.SetTrigger("DoTrace");
-                break;
-            case Monster.Type.Bat:
-                break;
-            case Monster.Type.Mummy:
-                break;
-            case Monster.Type.Mage:
-                oner.Animator.SetTrigger("DoTrace");
-                break;
-        }
+        oner.Animator.SetTrigger("DoTrace");
+
         oner.Nav.enabled = true;
         oner.Rigid.useGravity = false;
     }
@@ -82,6 +60,9 @@ public class M_TraceState : MonsterState
         }
         else if (!oner.IsCamp)
         {
+            if (oner.type == Monster.Type.Mummy)
+                oner.Animator.SetTrigger("DoReturn");
+
             ChangeState(Monster.State.Normal);
         }
     }
@@ -122,19 +103,7 @@ public class M_DieState : MonsterState
     public override void Enter()
     {
         oner.Rigid.velocity = Vector3.zero;
-        switch (oner.type)
-        {
-            case Monster.Type.Slime:
-                oner.Animator.Play("Die");
-                break;
-            case Monster.Type.Bat:
-                break;
-            case Monster.Type.Mummy:
-                break;
-            case Monster.Type.Mage:
-                oner.Animator.Play("Die");
-                break;
-        }
+        oner.Animator.Play("Die");
     }
 
     public M_DieState(Monster oner)

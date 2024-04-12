@@ -8,6 +8,8 @@ public class Mummy : Monster
 
     protected override IEnumerator AttackRotine()
     {
+        animator.SetInteger("Random", Random.Range(0, 3));
+        animator.SetTrigger("DoAttack");
         float time = 0;
         while (time <= 1)
         {
