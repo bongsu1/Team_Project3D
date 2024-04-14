@@ -27,7 +27,7 @@ public class InsertPoint : MonoBehaviour
             }
         }
     }
-    
+
     private void OnTriggerExit(Collider other)
     {
         if (((1 << other.gameObject.layer) & statueLayer) != 0)
