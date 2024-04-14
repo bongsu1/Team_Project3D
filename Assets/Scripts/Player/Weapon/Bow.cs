@@ -6,8 +6,7 @@ public class Bow : Weapon
     [Header("Bow")]
     [SerializeField] Transform arrowShotPoint;
     [SerializeField] LineRenderer lineRenderer;
-    [SerializeField]
-    float chargedTime; // Â÷Â¡ ½Ã°£
+    [SerializeField] float chargedTime; // Â÷Â¡ ½Ã°£
     public float ChargedTime => chargedTime;
     [SerializeField] LayerMask collisionLayer;
 

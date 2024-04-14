@@ -11,14 +11,11 @@ public class Player : MonoBehaviour, IDamagable
     [SerializeField] string curStateName;
 
     [Header("Component")]
-    [SerializeField]
-    Rigidbody rigid;
+    [SerializeField] Rigidbody rigid;
     public Rigidbody Rigid => rigid;
-    [SerializeField]
-    PlayerInput input;
+    [SerializeField] PlayerInput input;
     public PlayerInput Input => input;
-    [SerializeField]
-    Animator animator;
+    [SerializeField] Animator animator;
     public Animator Animator => animator;
 
     [Header("Render")]
@@ -31,25 +28,23 @@ public class Player : MonoBehaviour, IDamagable
 
     [Header("Attack")]
     [SerializeField] LayerMask groundLayer; // 방향돌리기용 다른 충돌체에 부딪혔을때 방향이 휨
-    [SerializeField]
-    Sword sword;
+    [SerializeField] Sword sword;
     public Sword Sword => sword;
-    [SerializeField]
-    Bow bow;
+    [SerializeField] Bow bow;
     public Bow Bow => bow;
 
     [Header("Dash")]
     [SerializeField] float dashSpeed;
-    [SerializeField]
-    float dashTime;
+    [SerializeField] float dashTime;
     public float DashTime => dashTime;
-    [SerializeField]
-    float dashCoolTime;
+    [SerializeField] float dashCoolTime;
     public float DashCoolTime => dashCoolTime;
 
-    [Header("Effect")]
+    [Header("Effect & Sound")]
     [SerializeField] PlayerEffect effect;
     public PlayerEffect Effect => effect;
+    [SerializeField] PlayerSound sound;
+    public PlayerSound Sound => sound;
 
     [Header("Collision")]
     [SerializeField] LayerMask monsterLayer;
@@ -175,6 +170,7 @@ public class Player : MonoBehaviour, IDamagable
         if (Manager.Game.Inventory.ItmeUse())
         {
             effect.PlayEffect(PlayerEffect.E_Type.UseHealPotion);
+            sound.PlaySound(PlayerSound.S_Type.UseHealPotion);
         }
     }
 
@@ -238,6 +234,7 @@ public class Player : MonoBehaviour, IDamagable
             gameObject.SetActive(false);
             gameObject.SetActive(true);
             effect.PlayEffect(PlayerEffect.E_Type.Respawn);
+            sound.PlaySound(PlayerSound.S_Type.Respawn);
             isDead = false;
             gameObject.layer = 3;
 
