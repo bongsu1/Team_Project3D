@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8724252888940433402}
   - component: {fileID: 1424409336012809527}
-  - component: {fileID: 7501014508964077970}
   m_Layer: 9
   m_Name: PhantomBase
   m_TagString: Untagged
@@ -56,19 +55,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 20, y: 2, z: 20}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7501014508964077970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 122357265454424153}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5649ea6065610a34a9b2a46de78d409c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseCampRange: {fileID: 1424409336012809527}
 --- !u!1 &215139742069461033
 GameObject:
   m_ObjectHideFlags: 0
@@ -858,6 +844,7 @@ MonoBehaviour:
     m_Bits: 0
   damage: 1
   rate: 1
+  hitEffect: {fileID: 0}
 --- !u!1 &3717637754899919444
 GameObject:
   m_ObjectHideFlags: 0
