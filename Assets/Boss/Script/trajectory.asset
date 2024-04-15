@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 530e556d4407947dcae7102ff497587d, type: 3}
+  m_Name: trajectory
+  m_EditorClassIdentifier: 
+  _data:
+    _json: '{"graph":{"title":null,"summary":null,"pan":{"x":0.0,"y":0.0},"zoom":1.0,"elements":[{"nest":{"source":"Embed","macro":null,"embed":{"variables":{"Kind":"Flow","collection":{"$content":[],"$version":"A"},"$version":"A"},"controlInputDefinitions":[],"controlOutputDefinitions":[],"valueInputDefinitions":[],"valueOutputDefinitions":[],"title":"Start","summary":null,"pan":{"x":0.0,"y":-15.0},"zoom":1.0,"elements":[{"coroutine":false,"defaultValues":{},"position":{"x":-205.0,"y":-215.0},"guid":"9f92fa48-82dd-4ee2-8960-aae5d16c285d","$version":"A","$type":"Unity.VisualScripting.OnEnterState"},{"coroutine":false,"defaultValues":{},"position":{"x":-189.0,"y":-106.0},"guid":"857e0a32-6031-4bfa-8971-d4b11aaf5fe3","$version":"A","$type":"Unity.VisualScripting.Update","$id":"15"},{"coroutine":false,"defaultValues":{},"position":{"x":-205.0,"y":145.0},"guid":"fd543dd4-1d32-49e1-a4f5-9176a55fe1b8","$version":"A","$type":"Unity.VisualScripting.OnExitState"},{"specifyFallback":false,"kind":"Scene","defaultValues":{"name":{"$content":"Trajectory","$type":"System.String"}},"position":{"x":-200.0,"y":4.0},"guid":"f6f033d0-7291-49cd-a0a3-bb8cc3990bd2","$version":"A","$type":"Unity.VisualScripting.GetVariable","$id":"19"},{"chainable":false,"member":{"name":"enabled","parameterTypes":null,"targetType":"UnityEngine.TrailRenderer","targetTypeName":"UnityEngine.TrailRenderer","$version":"A"},"defaultValues":{"target":null,"input":{"$content":false,"$type":"System.Boolean"}},"position":{"x":96.0,"y":35.0},"guid":"0c618c0e-0966-4331-92c9-961d461be6cd","$version":"A","$type":"Unity.VisualScripting.SetMember"},{"chainable":false,"member":{"name":"emitting","parameterTypes":null,"targetType":"UnityEngine.TrailRenderer","targetTypeName":"UnityEngine.TrailRenderer","$version":"A"},"defaultValues":{"target":null,"input":{"$content":false,"$type":"System.Boolean"}},"position":{"x":110.0,"y":-122.0},"guid":"bd3381e3-fc55-45b8-b4ff-fe4b273ab29f","$version":"A","$type":"Unity.VisualScripting.SetMember","$id":"24"},{"sourceUnit":{"$ref":"15"},"sourceKey":"trigger","destinationUnit":{"$ref":"24"},"destinationKey":"assign","guid":"b6b4ead7-b758-465f-a4be-313b02dced66","$type":"Unity.VisualScripting.ControlConnection"},{"sourceUnit":{"$ref":"19"},"sourceKey":"value","destinationUnit":{"$ref":"24"},"destinationKey":"input","guid":"7a26cc22-d865-4fab-98ab-0665cd74bc0d","$type":"Unity.VisualScripting.ValueConnection"}],"$version":"A"}},"isStart":true,"position":{"x":-86.0,"y":-15.0},"width":170.0,"guid":"5899db5e-1bf3-4b59-b90f-97c79112a194","$version":"A","$type":"Unity.VisualScripting.FlowState"}],"$version":"A"}}'
+    _objectReferences: []
