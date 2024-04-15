@@ -1,7 +1,9 @@
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class ExitMenuUI : PopUpUI
 {
+    [SerializeField] AudioClip buttonSound;
     PlayerInput playerInput;
 
     protected override void Awake()
@@ -26,5 +28,10 @@ public class ExitMenuUI : PopUpUI
     {
         Manager.Scene.LoadScene("TitleScene");
         Manager.UI.ClearPopUpUI();
+    }
+
+    public void PlayButtonClickSound()
+    {
+        Manager.Sound.PlaySFX(buttonSound);
     }
 }

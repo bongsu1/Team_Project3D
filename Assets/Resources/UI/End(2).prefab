@@ -52,6 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d207a3ae0ab4874ba81d98d9d41f1af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonSound: {fileID: 8300000, guid: 294ee3061f07d6244b20a4d6f79f7f20, type: 3}
 --- !u!1 &558463384146898565
 GameObject:
   m_ObjectHideFlags: 0
@@ -485,6 +486,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 5027533780632079390}
+        m_TargetAssemblyTypeName: ExitMenuUI, Assembly-CSharp
+        m_MethodName: PlayButtonClickSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3891739962439375941
 GameObject:
   m_ObjectHideFlags: 0
@@ -805,6 +818,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 5027533780632079390}
+        m_TargetAssemblyTypeName: ExitMenuUI, Assembly-CSharp
+        m_MethodName: PlayButtonClickSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7742086744913982780
 GameObject:
   m_ObjectHideFlags: 0
@@ -1025,6 +1050,18 @@ MonoBehaviour:
       - m_Target: {fileID: 5027533780632079390}
         m_TargetAssemblyTypeName: ExitMenuUI, Assembly-CSharp
         m_MethodName: ExitGameScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 5027533780632079390}
+        m_TargetAssemblyTypeName: ExitMenuUI, Assembly-CSharp
+        m_MethodName: PlayButtonClickSound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
