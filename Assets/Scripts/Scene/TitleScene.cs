@@ -3,9 +3,18 @@ using UnityEngine;
 
 public class TitleScene : BaseScene
 {
+    [Header("UI")]
     [SerializeField] GameObject settingUI;
+    [Header("Sound")]
+    [SerializeField] AudioClip bgm;
+    [SerializeField] AudioClip buttonSound;
 
     private bool doLoading;
+
+    private void Start()
+    {
+        Manager.Sound.PlayBGM(bgm);
+    }
 
     public override IEnumerator LoadingRoutine()
     {
@@ -17,6 +26,7 @@ public class TitleScene : BaseScene
         if (doLoading)
             return;
 
+        Manager.Sound.PlaySFX(buttonSound);
         doLoading = true;
         Manager.Scene.LoadScene("FirstStageScene");
     }
@@ -29,6 +39,7 @@ public class TitleScene : BaseScene
     public void OpenSettingWindow()
     {
         // test..
+        Manager.Sound.PlaySFX(buttonSound);
         settingUI.SetActive(true);
     }
 }
