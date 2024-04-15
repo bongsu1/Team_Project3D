@@ -1479,6 +1479,7 @@ MonoBehaviour:
   blackPotionImage: {fileID: 6648206143498244539}
   exitMenuUI: {fileID: 5027533780632079390, guid: 45408aa566b9adb4ab7364ff7be86512, type: 3}
   deadUI: {fileID: 2358670227035937293}
+  monsterCount: {fileID: 1314061360631083847}
 --- !u!114 &3568824337000828659
 MonoBehaviour:
   m_ObjectHideFlags: 0

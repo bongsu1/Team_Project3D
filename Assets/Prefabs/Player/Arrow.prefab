@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5180973931730922246}
   - component: {fileID: 5213772197084273880}
-  m_Layer: 21
+  m_Layer: 0
   m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -64,7 +64,7 @@ GameObject:
   - component: {fileID: 2876628886856925730}
   - component: {fileID: 2690101614239086716}
   - component: {fileID: 3444024478265313485}
-  m_Layer: 21
+  m_Layer: 0
   m_Name: ArrowRender
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -386,4 +386,4 @@ MonoBehaviour:
     m_Bits: 2101248
   rigid: {fileID: 5830898078752150087}
   bouncedDamage: 0
-  HitEffect: {fileID: 0}
+  hitEffect: {fileID: 0}
