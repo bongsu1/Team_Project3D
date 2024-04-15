@@ -1437,6 +1437,7 @@ MonoBehaviour:
     m_Bits: 0
   damage: 1
   rate: 1
+  hitEffect: {fileID: 0}
 --- !u!1 &1368207452087355443
 GameObject:
   m_ObjectHideFlags: 0
@@ -2905,7 +2906,7 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
-  searchDistance: 15
+  searchDistance: 10
   bats:
   - {fileID: 6011629677902749915}
   - {fileID: 4851547010635633892}
@@ -4407,6 +4408,7 @@ MonoBehaviour:
     m_Bits: 0
   damage: 1
   rate: 1
+  hitEffect: {fileID: 0}
 --- !u!1 &4373068338402983051
 GameObject:
   m_ObjectHideFlags: 0
@@ -4534,6 +4536,7 @@ MonoBehaviour:
     m_Bits: 0
   damage: 1
   rate: 1
+  hitEffect: {fileID: 0}
 --- !u!1 &9165261435159169914
 GameObject:
   m_ObjectHideFlags: 0
