@@ -12,9 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Build/FirstStageScene.unity
     guid: 10121b7ba0756134fa62f62cfcdcab0d
   - enabled: 1
-    path: Assets/A_SecondStage/Scene/SecondStageScene.unity
+    path: Assets/Scenes/Build/SecondStageScene.unity
     guid: d7986f81a7e33cd4fb59fddceb24a96c
   - enabled: 1
-    path: Assets/A_SecondStage/Scene/BossStageScene.unity
+    path: Assets/Scenes/Build/BossStageScene.unity
     guid: d2c7c365fd722724f86c1f4039420dc5
   m_configObjects: {}
