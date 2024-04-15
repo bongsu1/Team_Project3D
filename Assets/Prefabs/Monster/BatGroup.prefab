@@ -955,7 +955,7 @@ MonoBehaviour:
   moveSpeed: 2
   searchLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 4194312
   searchDistance: 0
   patrolPoint: []
   baseCampLayer:
@@ -2708,7 +2708,7 @@ MonoBehaviour:
   moveSpeed: 2
   searchLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 4194312
   searchDistance: 0
   patrolPoint: []
   baseCampLayer:
@@ -3387,7 +3387,7 @@ MonoBehaviour:
   moveSpeed: 2
   searchLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 4194312
   searchDistance: 0
   patrolPoint: []
   baseCampLayer:

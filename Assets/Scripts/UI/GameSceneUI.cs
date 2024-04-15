@@ -18,6 +18,9 @@ public class GameSceneUI : BaseUI
     [Header("Player Dead")]
     [SerializeField] GameObject deadUI;
 
+    [Header("Monster Count")]
+    [SerializeField] TMP_Text monsterCount;
+
     protected override void Awake()
     {
         base.Awake();
@@ -80,5 +83,10 @@ public class GameSceneUI : BaseUI
     public void OnEscape()
     {
         Manager.UI.ShowPopUpUI(exitMenuUI);
+    }
+
+    public void ChangeMonsterCount(int count)
+    {
+        monsterCount.text = count.ToString();
     }
 }

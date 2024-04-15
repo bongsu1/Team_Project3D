@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameScene : BaseScene
 {
@@ -13,6 +14,8 @@ public class GameScene : BaseScene
 
     [Header("Next Stage Button")]
     [SerializeField] NextStageButton nextStageButton;
+
+    public UnityEvent<int> OnMonsterCountChange;
 
     public override IEnumerator LoadingRoutine()
     {
@@ -36,6 +39,7 @@ public class GameScene : BaseScene
 
         monsters = FindObjectsOfType<Monster>();
         monsterCount = monsters.Length; // 이 맵에 있는 몬스터 수
+        OnMonsterCountChange?.Invoke(monsterCount);
         for (int i = 0; i < monsterCount; i++)
         {
             monsters[i].OnDead += PuzzleStart;
@@ -63,6 +67,7 @@ public class GameScene : BaseScene
             }
             monsters = FindObjectsOfType<Monster>();
             monsterCount = monsters.Length; // 이 맵에 있는 몬스터 수
+            OnMonsterCountChange?.Invoke(monsterCount);
             for (int i = 0; i < monsterCount; i++)
             {
                 monsters[i].OnDead += PuzzleStart;
@@ -78,6 +83,7 @@ public class GameScene : BaseScene
     private void PuzzleStart()
     {
         monsterCount--;
+        OnMonsterCountChange?.Invoke(monsterCount);
         if (monsterCount == 0)
         {
             if (statues.Length == 0) // 몬스터를 다 제거 후 석상이 없으면 클리어
