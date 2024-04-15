@@ -1056,7 +1056,7 @@ MonoBehaviour:
   moveSpeed: 3
   searchLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 4194312
   searchDistance: 5
   patrolPoint:
   - {fileID: 4277682348397444891}
@@ -2383,7 +2383,7 @@ MonoBehaviour:
   moveSpeed: 3
   searchLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 4194312
   searchDistance: 5
   patrolPoint:
   - {fileID: 8095269085804054667}
