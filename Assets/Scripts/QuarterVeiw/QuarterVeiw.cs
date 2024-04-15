@@ -15,8 +15,8 @@ public class QuarterVeiw : MonoBehaviour
     {
         if (((1 << other.gameObject.layer) & WallLayer) != 0)
         {
-            MeshRenderer mesh = other.GetComponent<MeshRenderer>();
-            if (mesh != null)
+            MeshRenderer[] meshs = other.GetComponentsInChildren<MeshRenderer>();
+            foreach (MeshRenderer mesh in meshs)
             {
                 mesh.enabled = false;
             }
@@ -27,8 +27,8 @@ public class QuarterVeiw : MonoBehaviour
     {
         if (((1 << other.gameObject.layer) & WallLayer) != 0)
         {
-            MeshRenderer mesh = other.GetComponent<MeshRenderer>();
-            if (mesh != null)
+            MeshRenderer[] meshs = other.GetComponentsInChildren<MeshRenderer>();
+            foreach (MeshRenderer mesh in meshs)
             {
                 mesh.enabled = true;
             }

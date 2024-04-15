@@ -8,9 +8,9 @@ public class BossScene : BaseScene
     [SerializeField] float cutSceneTime;
     [SerializeField] CinemachineVirtualCamera playerFollow;
     [SerializeField] PlayerInput playerInput;
-    [SerializeField] GameObject quaterView;
     [SerializeField] GameObject mainUI;
     [SerializeField] GameObject bossUI;
+    [SerializeField] MeshRenderer[] wallMesh;
 
     public override IEnumerator LoadingRoutine()
     {
@@ -30,8 +30,11 @@ public class BossScene : BaseScene
         yield return new WaitForSeconds(cutSceneTime);
         playerInput.enabled = true;
         playerFollow.Priority = 20;
-        quaterView.SetActive(true);
         mainUI.SetActive(true);
         bossUI.SetActive(true);
+        foreach(MeshRenderer mesh in wallMesh)
+        {
+            mesh.enabled = false;
+        }
     }
 }
