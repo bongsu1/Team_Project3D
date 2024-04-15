@@ -37,7 +37,7 @@ public class NextStageButton : MonoBehaviour, IInteractable
                 Manager.Scene.LoadScene("SecondStageScene");
                 break;
             case Scene.BossStage:
-                //Manager.Scene.LoadScene("BossStageScene"); ¹Ì¿Ï
+                Manager.Scene.LoadScene("BossStageScene");
                 break;
         }
     }
