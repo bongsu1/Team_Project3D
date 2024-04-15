@@ -55,28 +55,17 @@ public class GameScene : BaseScene
 
     // test..
     public bool isEditor;
-    private void OnEnable()
+    IEnumerator EditorRoutine()
+    {
+        yield return new WaitForSeconds(0.1f);
+        if (isEditor)
+            yield return LoadingRoutine();
+    }
+    private void Start()
     {
         if (isEditor)
         {
-            nextStageButton = FindObjectOfType<NextStageButton>();
-            statues = FindObjectsOfType<Statue>();
-            for (int i = 0; i < statues.Length; i++)
-            {
-                statues[i].OnInsert += PuzzleClear;
-            }
-            monsters = FindObjectsOfType<Monster>();
-            monsterCount = monsters.Length; // 이 맵에 있는 몬스터 수
-            OnMonsterCountChange?.Invoke(monsterCount);
-            for (int i = 0; i < monsterCount; i++)
-            {
-                monsters[i].OnDead += PuzzleStart;
-            }
-            if (monsterCount == 0) // 몬스터가 없으면 퍼즐 시작
-            {
-                monsterCount++;
-                PuzzleStart();
-            }
+            StartCoroutine(EditorRoutine());
         }
     }
 
