@@ -1182,7 +1182,7 @@ MonoBehaviour:
         m_CallState: 2
   testDamage: 0
   fillCount: 0
-  ReStartMode: 0
+  ReStartMode: 1
 --- !u!114 &5969955991907566981
 MonoBehaviour:
   m_ObjectHideFlags: 0
