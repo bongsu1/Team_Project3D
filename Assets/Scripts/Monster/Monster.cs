@@ -80,6 +80,7 @@ public class Monster : MonoBehaviour, IDamagable
 
     protected virtual void Start()
     {
+        attackDistance = attackDistance * transform.localScale.x;
         maxHp = hp;
 
         stateMachine.AddState(State.Normal, new M_NoramlState(this));
@@ -113,7 +114,7 @@ public class Monster : MonoBehaviour, IDamagable
         else
         {
             Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(transform.position, attackDistance);
+            Gizmos.DrawWireSphere(transform.position, attackDistance * transform.localScale.x);
         }
     }
 
