@@ -42,4 +42,15 @@ public class TitleScene : BaseScene
         Manager.Sound.PlaySFX(buttonSound);
         settingUI.SetActive(true);
     }
+
+    [ContextMenu("Stage2")]
+    public void DebugStage2()
+    {
+        if (doLoading)
+            return;
+
+        Manager.Sound.PlaySFX(buttonSound);
+        doLoading = true;
+        Manager.Scene.LoadScene("SecondStageScene");
+    }
 }
