@@ -488,13 +488,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   curState: 
-  hp: 100
+  hp: 40
   damage: 2
   moveSpeed: 3
   searchLayer:
     serializedVersion: 2
     m_Bits: 4194312
-  searchDistance: 5
+  searchDistance: 3
   patrolPoint:
   - {fileID: 2684242302033265629}
   baseCampLayer:
@@ -507,9 +507,9 @@ MonoBehaviour:
   animator: {fileID: 7527252215051498697}
   bullet: {fileID: 5088882698978676955}
   attackDelay: 0.4
-  attackRate: 2.5
-  attackSpeed: 0
-  attackDistance: 3
+  attackRate: 1
+  attackSpeed: 1
+  attackDistance: 2
   curColor: {r: 0, g: 0, b: 0, a: 0}
   hurtColor: {r: 0, g: 0, b: 0, a: 0}
   canKnockback: 0

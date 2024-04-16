@@ -1591,7 +1591,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4160
   firstDamage: 10
-  thirdDamage: 30
+  thirdDamage: 20
   attackRate: 0.3
   secondAttackDelay: 0.4
   thirdAttackRate: 1.5
@@ -2219,9 +2219,9 @@ MonoBehaviour:
     m_Bits: 2097216
   arrowPrefab: {fileID: 9192283958342537045, guid: 95d8b8309b3208b45a9214ad1df7a7b3, type: 3}
   BounceCount: 2
-  normalDamage: 10
-  chargedDamage: 20
-  fullChargedDamage: 30
+  normalDamage: 4
+  chargedDamage: 7
+  fullChargedDamage: 9
   normalRange: 10
   chargedRange: 20
   normalSpeed: 10
