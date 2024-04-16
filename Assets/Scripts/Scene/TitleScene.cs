@@ -53,4 +53,20 @@ public class TitleScene : BaseScene
         doLoading = true;
         Manager.Scene.LoadScene("SecondStageScene");
     }
+
+    // test..
+    public void LoadSecondStageScene()
+    {
+        if (doLoading)
+            return;
+        doLoading = true;
+        Manager.Scene.LoadScene("SecondStageScene");
+    }
+    public void LoadBossStageScene()
+    {
+        if (doLoading)
+            return;
+        doLoading = true;
+        Manager.Scene.LoadScene("BossStageScene");
+    }
 }
