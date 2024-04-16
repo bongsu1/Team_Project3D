@@ -1376,6 +1376,7 @@ GameObject:
   - component: {fileID: 4204384454288275174}
   - component: {fileID: 9157817729308717686}
   - component: {fileID: 3568824337000828659}
+  - component: {fileID: 7588808719656002774}
   m_Layer: 5
   m_Name: MainUI
   m_TagString: Untagged
@@ -1400,8 +1401,8 @@ RectTransform:
   - {fileID: 4664758325937703786}
   - {fileID: 13402877913552824}
   - {fileID: 5343629552803455255}
-  - {fileID: 724365685839752496}
   - {fileID: 3062343973379999731}
+  - {fileID: 724365685839752496}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1510,6 +1511,23 @@ MonoBehaviour:
   m_DefaultActionMap: UI
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &7588808719656002774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754891483788354688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &1871535303481077710
 GameObject:
   m_ObjectHideFlags: 0
