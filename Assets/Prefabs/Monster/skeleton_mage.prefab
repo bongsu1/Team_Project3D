@@ -147,8 +147,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 3
   curState: 
-  hp: 50
-  damage: 1
+  hp: 36
+  damage: 3
   moveSpeed: 1
   searchLayer:
     serializedVersion: 2
@@ -165,9 +165,9 @@ MonoBehaviour:
   animator: {fileID: 2401112382560122197}
   bullet: {fileID: 158175272323091315, guid: 8325aed5b52edd94e8e5c967cae1f31c, type: 3}
   attackDelay: 1
-  attackRate: 3
+  attackRate: 4
   attackSpeed: 5
-  attackDistance: 20
+  attackDistance: 7
   curColor: {r: 0, g: 0, b: 0, a: 0}
   hurtColor: {r: 0, g: 0, b: 0, a: 0}
   canKnockback: 0
