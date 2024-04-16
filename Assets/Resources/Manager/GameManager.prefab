@@ -140,7 +140,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxItemCount: 4
   itemCount: 4
-  healValue: 1
+  healValue: 2
   healDelay: 0
   coolTime: 1
 --- !u!1 &4895897874919896870
