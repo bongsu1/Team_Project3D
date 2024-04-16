@@ -12,10 +12,10 @@ public class Mage : Monster
     public override void Attack()
     {
         onAttack = true;
-        attackRoutine = StartCoroutine(AttackRotine());
+        attackRoutine = StartCoroutine(AttackRoutine());
     }
 
-    protected override IEnumerator AttackRotine()
+    protected override IEnumerator AttackRoutine()
     {
         animator.SetTrigger("DoAttack");
         float time = 0;

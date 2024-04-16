@@ -7,8 +7,15 @@ public class Bat : Monster
     [SerializeField] float backMoveDistance;
 
     Vector3 curPos;
+    Coroutine attackRoutine;
 
-    protected override IEnumerator AttackRotine()
+    public override void Attack()
+    {
+        onAttack = true;
+        attackRoutine = StartCoroutine(AttackRoutine());
+    }
+
+    protected override IEnumerator AttackRoutine()
     {
         rigid.useGravity = false;
         curPos = transform.position;
@@ -39,6 +46,20 @@ public class Bat : Monster
         yield return new WaitForSeconds(0.1f);
         onAttack = false;
         rigid.useGravity = true;
+    }
+
+    public override void TakeDamage(int damage)
+    {
+        base.TakeDamage(damage);
+        if (isDead)
+        {
+            if (attackRoutine != null)
+            {
+                StopCoroutine(attackRoutine);
+                rigid.useGravity = true;
+                onAttack = false;
+            }
+        }
     }
 
     public void ChangeTraceState(Transform target)

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Slime : Monster
 {
-    protected override IEnumerator AttackRotine()
+    protected override IEnumerator AttackRoutine()
     {
         float time = 0;
         while (time <= 1)

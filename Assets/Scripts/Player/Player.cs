@@ -102,6 +102,9 @@ public class Player : MonoBehaviour, IDamagable
         if (isDead)
             return;
 
+        if (!input.enabled)
+            moveDir = Vector3.zero;
+
         stateMachine.Update();
     }
 

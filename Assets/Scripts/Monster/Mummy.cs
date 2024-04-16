@@ -6,7 +6,7 @@ public class Mummy : Monster
     [Header("Mummy")]
     [SerializeField] Collider attackRange;
 
-    protected override IEnumerator AttackRotine()
+    protected override IEnumerator AttackRoutine()
     {
         animator.SetInteger("Random", Random.Range(0, 3));
         animator.SetTrigger("DoAttack");

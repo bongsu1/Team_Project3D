@@ -187,10 +187,10 @@ public class Monster : MonoBehaviour, IDamagable
     {
         // test..
         onAttack = true;
-        StartCoroutine(AttackRotine());
+        StartCoroutine(AttackRoutine());
     }
 
-    protected virtual IEnumerator AttackRotine()
+    protected virtual IEnumerator AttackRoutine()
     {
         yield return null;
     }
