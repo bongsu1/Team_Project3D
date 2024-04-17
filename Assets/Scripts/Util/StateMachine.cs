@@ -5,6 +5,7 @@ public class StateMachine<T> where T : Enum
 {
     private Dictionary<T, BaseState<T>> stateDic = new Dictionary<T, BaseState<T>>();
     private BaseState<T> curState;
+    public string CurState => curState.ToString(); // 스테이트 확인용
 
     public void Start(T startState)
     {

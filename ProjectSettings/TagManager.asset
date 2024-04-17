@@ -12,24 +12,24 @@ TagManager:
   - Water
   - UI
   - Monster
+  - DeadMonster
+  - MonsterBullet
+  - BaseCamp
+  - SearchLayer
+  - Interactable
+  - Statue
+  - StatueInsertPoint
+  - DeadPlayer
   - 
   - 
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - WeaPon
+  - Wall
+  - Invincibility
+  - Ground
+  - InvisibleWall
   - 
   - 
   - 
