@@ -129,7 +129,7 @@ MonoBehaviour:
   searchLayer:
     serializedVersion: 2
     m_Bits: 4194312
-  searchDistance: 10
+  searchDistance: 5
   patrolPoint: []
   baseCampLayer:
     serializedVersion: 2
@@ -488,7 +488,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 3
+  m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6160083054935230795
 GameObject:

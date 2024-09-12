@@ -8,19 +8,17 @@ public class Arrow : MonoBehaviour
     [SerializeField] int bouncedDamage;
     [SerializeField] HitEffect hitEffect;
 
-    int damage;
+    private int damage;
     public int Damage { set { damage = value; } }
-    int bounceCount;
-    public int BounceCount { set { bounceCount = value; } }
-    float arrowSpeed;
-    public float ArrowSpeed { set { arrowSpeed = value; } }
-    float arrowRange;
-    public float ArrowRange { set { arrowRange = value; } }
 
-    private void OnEnable()
-    {
-        hitEffect = Instantiate(Manager.Resource.Load<HitEffect>("Effect/HitEffect"), transform);
-    }
+    private int bounceCount;
+    public int BounceCount { set { bounceCount = value; } }
+
+    private float arrowSpeed;
+    public float ArrowSpeed { set { arrowSpeed = value; } }
+
+    private float arrowRange;
+    public float ArrowRange { set { arrowRange = value; } }
 
     private void Start()
     {
@@ -61,8 +59,7 @@ public class Arrow : MonoBehaviour
                 damage += bouncedDamage;
 
                 Vector3 reflectDir = Vector3.Reflect(transform.forward, collision.contacts[0].normal);
-                transform.forward = reflectDir; // 자신 위치기준으로 돌림 ex) (1,0)오른쪽 (-1,0)왼쪽
-                //transform.LookAt(transform.position + reflectDir); // 타겟 위치 기준으로 방향돌림
+                transform.forward = reflectDir;
             }
             else
             {

@@ -26,55 +26,45 @@ public class Bow : Weapon
 
     bool canShot = true;
     public bool CanShot { get { return canShot; } set { canShot = value; } }
-    bool isRayHit;
     RaycastHit hit;
     Coroutine chagingRoutine;
     float lineRenderRange;
+    bool isCharged;
 
-    private void Start()
-    {
-        lineRenderer.positionCount = 2;
-    }
-
-    private void Update()
+    private void FixedUpdate()
     {
         if (lineRenderer.enabled)
         {
+            lineRenderer.positionCount = 2;
             lineRenderer.SetPosition(0, arrowShotPoint.position);
-            if (isRayHit)
+            if (Physics.Raycast(arrowShotPoint.position, arrowShotPoint.forward, out hit, lineRenderRange, collisionLayer))
             {
                 lineRenderer.SetPosition(1, hit.point);
+
+                float amountRange = lineRenderRange - Vector3.Distance(hit.point, arrowShotPoint.position);
+                Vector3 hitPoint = hit.point;
+                Vector3 nextDir = Vector3.Reflect(arrowShotPoint.forward, hit.normal);
+                lineRenderer.positionCount = 3;
+
+                if (Physics.Raycast(hitPoint, nextDir, out hit, amountRange, collisionLayer))
+                {
+                    lineRenderer.SetPosition(2, hit.point);
+                }
+                else
+                {
+                    lineRenderer.SetPosition(2, hitPoint + nextDir * amountRange);
+                }
             }
             else
             {
                 lineRenderer.SetPosition(1, arrowShotPoint.position + arrowShotPoint.forward * lineRenderRange);
             }
         }
-        else
-        {
-            lineRenderer.SetPosition(0, arrowShotPoint.position);
-            lineRenderer.SetPosition(1, arrowShotPoint.position);
-        }
-    }
-
-    private void FixedUpdate()
-    {
-        if (lineRenderer.enabled)
-        {
-            if (Physics.Raycast(arrowShotPoint.position, arrowShotPoint.forward, out hit, lineRenderRange, collisionLayer))
-            {
-                isRayHit = true;
-            }
-            else
-            {
-                isRayHit = false;
-            }
-        }
     }
 
     /// <summary>
     /// onClick 마우스 버튼 입력여부
-    /// charged 몇번째 충전인지
+    /// isCharged 몇번째 충전인지
     /// </summary>
     /// <param name="onClick"></param>
     /// <param name="charged"></param>
@@ -82,6 +72,9 @@ public class Bow : Weapon
     {
         if (onClick)
         {
+            lineRenderer.SetPosition(0, arrowShotPoint.position);
+            lineRenderer.SetPosition(1, arrowShotPoint.position);
+
             lineRenderer.enabled = true;
             lineRenderRange = normalRange;
             chagingRoutine = StartCoroutine(ChagingRoutine());
@@ -126,6 +119,7 @@ public class Bow : Weapon
         }
         lineRenderer.widthMultiplier = 1;
         lineRenderRange = normalRange;
+        isCharged = false;
     }
 
     IEnumerator ChagingRoutine()
@@ -133,5 +127,6 @@ public class Bow : Weapon
         yield return new WaitForSeconds(chargedTime);
         lineRenderer.widthMultiplier = 2;
         lineRenderRange = chargedRange;
+        isCharged = true;
     }
 }
