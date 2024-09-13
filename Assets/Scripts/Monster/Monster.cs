@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -245,6 +246,8 @@ public class Monster : MonoBehaviour, IDamagable
                 case Type.Mummy:
                     break;
                 case Type.Mage:
+                    break;
+                default: // do nothing
                     break;
             }
             stateMachine.ChangeState(State.Die);

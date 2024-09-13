@@ -39,6 +39,8 @@ public class NextStageButton : MonoBehaviour, IInteractable
             case Scene.BossStage:
                 Manager.Scene.LoadScene("BossStageScene");
                 break;
+            default: // do nothing
+                break;
         }
     }
 

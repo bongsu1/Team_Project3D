@@ -105,6 +105,8 @@ public class Bow : Weapon
                     arrow.Damage = fullChargedDamage;
                     arrow.BounceCount = BounceCount;
                     break;
+                default: // do nothing
+                    break;
             }
         }
     }

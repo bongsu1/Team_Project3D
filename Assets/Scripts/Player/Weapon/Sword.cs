@@ -42,6 +42,8 @@ public class Sword : Weapon
             case 3:
                 StartCoroutine(ThirdAttackRoutine());
                 break;
+            default: // do nothing
+                break;
         }
     }
 

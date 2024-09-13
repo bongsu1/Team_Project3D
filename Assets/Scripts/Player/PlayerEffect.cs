@@ -102,6 +102,9 @@ public class PlayerEffect : MonoBehaviour
                 curEffect = null;
                 effects[curIndex].SetActive(false);
                 break;
+
+            default: // do nothing
+                break;
         }
     }
 }
